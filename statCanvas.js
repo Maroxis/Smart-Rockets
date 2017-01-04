@@ -27,10 +27,12 @@ var statCanvas = function( c ) {
       if(populations[i].TFit > TopFit)
         TopFit = populations[i].TFit
     }
-    for(var i = 0; i < populations.length; i++){
+    
     c.fill(0, 102, 153);
     c.textSize(32);
-    c.text("Max Fit: "+populations[i].TFit, 10, 30);
+    c.text("Max Fit: "+TopFit, 10, 30);
+    
+    for(var i = 0; i < populations.length; i++){
       
       c.stroke(populations[i].col.levels[0],populations[i].col.levels[1],populations[i].col.levels[2],62)
       c.fill(populations[i].col.levels[0],populations[i].col.levels[1],populations[i].col.levels[2],62)
