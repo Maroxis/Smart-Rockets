@@ -11,11 +11,14 @@ function Population(size,col) {
   this.AFit = 0; //avarge
   this.LAFit = 0; // longterm avarge fitness
   this.TFit = 0; //top of all time
+  this.his = new history(histLenght)
+  this.longHis = new history(histLenght)
+  
   if(!col)
   {
-    var c1 = floor(random(63,127))
-    var c2 = floor(random(63,127))
-    var c3 = floor(random(63,127))
+    var c1 = floor(random(20,200))
+    var c2 = floor(random(20,200))
+    var c3 = floor(random(20,200))
     this.col = color(c1,c2,c3,128)
   }
   else

@@ -30,9 +30,9 @@ var statCanvas = function( c ) {
       c.stroke(population.col.levels[0],population.col.levels[1],population.col.levels[2],62)
       c.fill(population.col.levels[0],population.col.levels[1],population.col.levels[2],62)
       c.beginShape();
-      for(var i = 0; i < statHist.el.length; i++) // Avarge fitt / Total
+      for(var i = 0; i < population.his.el.length; i++) // Avarge fitt / Total
       {
-        c.score = map(statHist.el[i][0],0,population.TFit,0,c.height-42)
+        c.score = map(population.his.el[i][0],0,population.TFit,0,c.height-42)
         c.vertex((i+1)*c.step, c.height - c.score);
    
         // c.push()
@@ -41,7 +41,7 @@ var statCanvas = function( c ) {
         // c.pop()
         
       }
-      c.vertex((statHist.el.length)*c.step, height);
+      c.vertex((population.his.el.length)*c.step, height);
       c.vertex(0, height);
       c.endShape(CLOSE);
     
@@ -49,9 +49,9 @@ var statCanvas = function( c ) {
       c.strokeWeight(1)
       c.stroke(population.col.levels[0],population.col.levels[1],population.col.levels[2],255)
      
-      for(var i = 0; i < LongStatHist.el.length; i++) //Longterm Avarge fitt / Total
+      for(var i = 0; i < population.longHis.el.length; i++) //Longterm Avarge fitt / Total
       {
-        c.score = map(LongStatHist.el[i][0],0,population.TFit,0,c.height-42)
+        c.score = map(population.longHis.el[i][0],0,population.TFit,0,c.height-42)
         
         if(c.prevScore !== 0)
           c.line(i*c.step,c.height - c.prevScore,(i+1)*c.step,c.height - c.score)

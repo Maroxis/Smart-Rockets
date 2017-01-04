@@ -13,8 +13,6 @@ var maxFitness;
 
 //Stat Logs
 var statCanv
-var statHist = new history(histLenght)
-var LongStatHist = new history(histLenght)
 
 var obstacles = []
 
@@ -86,11 +84,11 @@ function makeSimulation() {
 
     if (gen % longH === 0 || gen == 1) {
       population.LAFit /= longH
-      LongStatHist.log(population.LAFit, gen) // finished,
+      population.longHis.log(population.LAFit, gen) // finished,
       population.LAFit = 0;
     }
 
-    statHist.log(population.AFit, finished, gen)
+    population.his.log(population.AFit, finished, gen)
 
     gen++;
     count = 0;
