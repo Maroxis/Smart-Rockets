@@ -12,7 +12,7 @@ function Population(size,col) {
   this.LAFit = 0; // longterm avarge fitness
   this.TFit = 0; //top of all time
   this.his = new history(histLenght)
-  this.longHis = new history(histLenght)
+  this.longHis = new history(LHstLenght)
   
   if(!col)
   {

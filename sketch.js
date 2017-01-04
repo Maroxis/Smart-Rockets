@@ -4,27 +4,11 @@
 // Code for: https://youtu.be/bGz7mv2vD6g
 
 var state = 0;
-
-//Rockets
-var population;
-var smartPopulation;
-
+var populations = [];
 var maxFitness;
-
-//Stat Logs
 var statCanv
-
-var obstacles = []
-
-//target
+var obstacles = [];
 var target;
-
-
-// var obstPropDiv
-
-// var obstW
-// var obstH
-
 
 //Timer
 var count
@@ -46,7 +30,8 @@ function setup() {
   ///rockets
   //rocket = new Rocket();
   var col = color(0,255,255,128)
-  population = new Population(popSize);
+  for(var i = 0; i < popNum; i++)
+    populations.push(new Population(popSize))
 
   //fitness
   maxFitness = width * targetBonus * timeBonus;
@@ -69,26 +54,31 @@ function quickSim() {
 }
 
 function makeSimulation() {
-  
-  if (population.run())
-    count = lifespan
+  var genDone = true;
+  for(var i = 0; i < populations.length; i++){
+    if(!populations[i].run())
+      genDone = false;
+  }
+  if(genDone)
+    count = lifespan;
   else
     count++;
-
+    
   if (count == lifespan) {
 
-    population.evaluate();
-    population.selection();
-
-    population.LAFit += population.AFit
-
+  for(var i = 0; i < populations.length; i++){
+    populations[i].evaluate();
+    populations[i].selection();
+    populations[i].LAFit += populations[i].AFit
+    populations[i].his.log(populations[i].AFit, finished, gen)
+  }
     if (gen % longH === 0 || gen == 1) {
-      population.LAFit /= longH
-      population.longHis.log(population.LAFit, gen) // finished,
-      population.LAFit = 0;
+      for(var i = 0; i < populations.length; i++){
+        populations[i].LAFit /= longH
+        populations[i].longHis.log(populations[i].LAFit, gen) // finished,
+        populations[i].LAFit = 0;
+      }
     }
-
-    population.his.log(population.AFit, finished, gen)
 
     gen++;
     count = 0;
@@ -104,16 +94,19 @@ function draw() {
 
   if (state !== 0)
     makeSimulation()
-
+    
+  
   if (drawStats)
     statCanv.drawScore()
 
   lifeP.html("frames: " + count + " sec: " + sec + " Generation: " + gen);
-  fitnessP.html("Highest fitness: " + population.HFit + " Avarge fitness: " + population.AFit);
+  //fitnessP.html("Highest fitness: " + population.HFit + " Avarge fitness: " + population.AFit);
 
   //rockets
-  for (var i = 0; i < population.popsize; i++) {
-    population.rockets[i].show();
+  for(var i = 0; i < populations.length; i++){
+    for (var j = 0; j < populations[i].popsize; j++) {
+      populations[i].rockets[j].show();
+    }
   }
   fill(255);
   //obstacles

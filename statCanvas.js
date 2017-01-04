@@ -22,18 +22,24 @@ var statCanvas = function( c ) {
   };
   c.drawScore = function(){
     c.draw()
-    
+    var TopFit = populations[0].TFit
+    for(var i = 1; i < populations.length; i++){
+      if(populations[i].TFit > TopFit)
+        TopFit = populations[i].TFit
+    }
+    for(var i = 0; i < populations.length; i++){
     c.fill(0, 102, 153);
     c.textSize(32);
-    c.text("Max Fit: "+population.TFit, 10, 30);
+    c.text("Max Fit: "+populations[i].TFit, 10, 30);
       
-      c.stroke(population.col.levels[0],population.col.levels[1],population.col.levels[2],62)
-      c.fill(population.col.levels[0],population.col.levels[1],population.col.levels[2],62)
+      c.stroke(populations[i].col.levels[0],populations[i].col.levels[1],populations[i].col.levels[2],62)
+      c.fill(populations[i].col.levels[0],populations[i].col.levels[1],populations[i].col.levels[2],62)
       c.beginShape();
-      for(var i = 0; i < population.his.el.length; i++) // Avarge fitt / Total
+     
+      for(var j = 0; j < populations[i].his.el.length; j++) // Avarge fitt / Total
       {
-        c.score = map(population.his.el[i][0],0,population.TFit,0,c.height-42)
-        c.vertex((i+1)*c.step, c.height - c.score);
+        c.score = map(populations[i].his.el[j][0],0,TopFit,0,c.height-42)
+        c.vertex((j+1)*c.step, c.height - c.score);
    
         // c.push()
         // c.strokeWeight(4)
@@ -41,26 +47,26 @@ var statCanvas = function( c ) {
         // c.pop()
         
       }
-      c.vertex((population.his.el.length)*c.step, height);
+      c.vertex((populations[i].his.el.length)*c.step, height);
       c.vertex(0, height);
       c.endShape(CLOSE);
     
       c.noFill()
       c.strokeWeight(1)
-      c.stroke(population.col.levels[0],population.col.levels[1],population.col.levels[2],255)
+      c.stroke(populations[i].col.levels[0],populations[i].col.levels[1],populations[i].col.levels[2],255)
      
-      for(var i = 0; i < population.longHis.el.length; i++) //Longterm Avarge fitt / Total
+      for(var j = 0; j < populations[i].longHis.el.length; j++) //Longterm Avarge fitt / Total
       {
-        c.score = map(population.longHis.el[i][0],0,population.TFit,0,c.height-42)
+        c.score = map(populations[i].longHis.el[j][0],0,TopFit,0,c.height-42)
         
         if(c.prevScore !== 0)
-          c.line(i*c.step,c.height - c.prevScore,(i+1)*c.step,c.height - c.score)
+          c.line(j*c.step,c.height - c.prevScore,(j+1)*c.step,c.height - c.score)
         else
-          c.line(i*c.step,c.height - c.score,(i+1)*c.step,c.height - c.score)
+          c.line(j*c.step,c.height - c.score,(j+1)*c.step,c.height - c.score)
         
         c.push()
         c.strokeWeight(4)
-        c.point((i+1)*c.step,c.height - c.score)
+        c.point((j+1)*c.step,c.height - c.score)
         c.pop()
         c.prevScore = c.score
       }
@@ -70,7 +76,7 @@ var statCanvas = function( c ) {
       c.stroke(0,255,0,192)
       for(var i = 0; i < statHist.el.length; i++) // hit target / Total
       {
-        c.score = map(statHist.el[i][1],0,population.popsize,0,c.height-42)
+        c.score = map(statHist.el[i][1],0,populations[i].popsize,0,c.height-42)
         if(c.prevScore !== 0)
           c.line(i*c.step,c.height - c.prevScore,(i+1)*c.step,c.height - c.score)
         else
@@ -84,5 +90,6 @@ var statCanvas = function( c ) {
       }
       c.prevScore = 0
     */
+    }
   }
 };
