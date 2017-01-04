@@ -49,7 +49,7 @@ function Population(size,col) {
       
       var child = parentA.crossover(parentB);
       child.mutation();
-      newRockets[i] = new Rocket(child,col);
+      newRockets[i] = new Rocket(child,this.col);
     }
     this.rockets = newRockets;
   }
