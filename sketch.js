@@ -21,16 +21,11 @@ var obstacles = []
 //target
 var target;
 
-//Dom
-var lifeP
-var fitnessP
-var btStart
-var btAddObst
-var inp
-var obstPropDiv
 
-var obstW
-var obstH
+// var obstPropDiv
+
+// var obstW
+// var obstH
 
 
 //Timer
@@ -50,7 +45,6 @@ function setup() {
     statCanv = new p5(statCanvas);
 
   dom() // dom.js
-
   ///rockets
   //rocket = new Rocket();
   var col = color(0,255,255,128)
