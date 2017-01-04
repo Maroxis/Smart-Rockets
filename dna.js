@@ -2,7 +2,7 @@
 // http://codingrainbow.com
 // http://patreon.com/codingrainbow
 // Code for: https://youtu.be/bGz7mv2vD6g
-var maxForceDiff = 0.5
+//var maxForceDiff = 0.5
 
 function DNA(genes) {
   if (genes) {

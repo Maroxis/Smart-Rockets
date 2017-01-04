@@ -7,22 +7,36 @@ function Population(size,col) {
   this.rockets = [];
   this.popsize = size;
   this.matingpool = [];
+  this.HFit = 0; //top of curent gen
+  this.AFit = 0; //avarge
+  this.LAFit = 0; // longterm avarge fitness
+  this.TFit = 0; //top of all time
+  if(!col)
+  {
+    var c1 = floor(random(63,255))
+    var c2 = floor(random(63,255))
+    var c3 = floor(random(63,255))
+    this.col = color(c1,c2,c3,128)
+  }
+  else
+    this.col = col
+    
   for (var i = 0; i < this.popsize; i++) {
-    this.rockets[i] = new Rocket(null,col);
+    this.rockets[i] = new Rocket(null,this.col);
   }
 
   this.evaluate = function() {
       finished = 0;
-      HFit = 0;
+      this.HFit = 0;
       for (var i = 0; i < this.popsize; i++) {
       this.rockets[i].calcFitness();
-      AFit += this.rockets[i].fitness;
-      if (this.rockets[i].fitness > HFit)
-        HFit = this.rockets[i].fitness
+      this.AFit += this.rockets[i].fitness;
+      if (this.rockets[i].fitness > this.HFit)
+        this.HFit = this.rockets[i].fitness
     }
-    if(HFit > TFit)
-      TFit = HFit
-    AFit = floor(AFit/this.popsize)
+    if(this.HFit > this.TFit)
+      this.TFit = this.HFit
+    this.AFit = floor(this.AFit/this.popsize)
 
   }
 
@@ -51,7 +65,7 @@ function Population(size,col) {
   this.acceptReject = function(){
       while(true){
       var rocket = random(this.rockets)
-      var r = random(0,HFit)
+      var r = random(0,this.HFit)
       if(rocket.fitness > r)
         return rocket.dna;
       }

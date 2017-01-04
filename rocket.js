@@ -13,7 +13,9 @@ function Rocket(dna,col) {
   this.completed = false;
   this.crashed = false;
   if(!col)
+  {
     this.col = color(0,255,255,128)
+  }
   else
     this.col = col
 
@@ -33,7 +35,6 @@ function Rocket(dna,col) {
     //var maxd = dist(this.pos.x, this.pos.y, width, height);
 
     this.fitness = floor(map(d, 0, width, width, 1));
-    
     
     if (this.completed) {
       //finished += 1

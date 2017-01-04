@@ -25,17 +25,16 @@ var statCanvas = function( c ) {
     
     c.fill(0, 102, 153);
     c.textSize(32);
-    c.text("Max Fit: "+TFit, 10, 30);
+    c.text("Max Fit: "+population.TFit, 10, 30);
     
     
     
     c.noFill()
     c.strokeWeight(1)
-    
-      c.stroke(0,255,0,192)
+      c.stroke(population.col.levels[0],population.col.levels[1],population.col.levels[2],63)
       for(var i = 0; i < LongStatHist.el.length; i++) //Longterm Avarge fitt / Total
       {
-        c.score = map(LongStatHist.el[i][0],0,TFit,0,c.height-42)
+        c.score = map(LongStatHist.el[i][0],0,population.TFit,0,c.height-42)
         
         if(c.prevScore !== 0)
           c.line(i*c.step,c.height - c.prevScore,(i+1)*c.step,c.height - c.score)
@@ -50,10 +49,10 @@ var statCanvas = function( c ) {
       }
       
       c.prevScore = 0
-      c.stroke(255,0,0)
+      c.stroke(population.col.levels[0],population.col.levels[1],population.col.levels[2],255)
       for(var i = 0; i < statHist.el.length; i++) // Avarge fitt / Total
       {
-        c.score = map(statHist.el[i][0],0,TFit,0,c.height-42)
+        c.score = map(statHist.el[i][0],0,population.TFit,0,c.height-42)
         
         if(c.prevScore !== 0)
           c.line(i*c.step,c.height - c.prevScore,(i+1)*c.step,c.height - c.score)

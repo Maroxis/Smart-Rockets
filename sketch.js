@@ -9,13 +9,6 @@ var state = 0;
 var population;
 var smartPopulation;
 
-//Fitness
-var HFit = 0; //top of curent gen
-var AFit = 0; //avarge
-var LAFit = 0; // longterm avarge fitness
-var TFit = 0; //top of all time
-//var finished; //num of rockets that hit target in cur. gen
-
 var maxFitness;
 
 //Stat Logs
@@ -61,7 +54,7 @@ function setup() {
   ///rockets
   //rocket = new Rocket();
   var col = color(0,255,255,128)
-  population = new Population(popSize,col);
+  population = new Population(popSize);
 
   //fitness
   maxFitness = width * targetBonus * timeBonus;
@@ -95,15 +88,15 @@ function makeSimulation() {
     population.evaluate();
     population.selection();
 
-    LAFit += AFit
+    population.LAFit += population.AFit
 
     if (gen % longH === 0 || gen == 1) {
-      LAFit /= longH
-      LongStatHist.log(LAFit, gen) // finished,
-      LAFit = 0;
+      population.LAFit /= longH
+      LongStatHist.log(population.LAFit, gen) // finished,
+      population.LAFit = 0;
     }
 
-    statHist.log(AFit, finished, gen)
+    statHist.log(population.AFit, finished, gen)
 
     gen++;
     count = 0;
@@ -124,7 +117,7 @@ function draw() {
     statCanv.drawScore()
 
   lifeP.html("frames: " + count + " sec: " + sec + " Generation: " + gen);
-  fitnessP.html("Highest fitness: " + HFit + " Avarge fitness: " + AFit);
+  fitnessP.html("Highest fitness: " + population.HFit + " Avarge fitness: " + population.AFit);
 
   //rockets
   for (var i = 0; i < population.popsize; i++) {
