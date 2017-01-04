@@ -13,9 +13,9 @@ function Population(size,col) {
   this.TFit = 0; //top of all time
   if(!col)
   {
-    var c1 = floor(random(63,255))
-    var c2 = floor(random(63,255))
-    var c3 = floor(random(63,255))
+    var c1 = floor(random(63,127))
+    var c2 = floor(random(63,127))
+    var c3 = floor(random(63,127))
     this.col = color(c1,c2,c3,128)
   }
   else

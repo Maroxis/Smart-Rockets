@@ -10,5 +10,5 @@ var timeBonus = 20;
 var crashPenalty = 30;
 
 var drawStats = true;
-var histLenght = 100
-var longH = 10 // log avarge of X generations
+var histLenght = 50
+var longH = 50 // log avarge of X generations
