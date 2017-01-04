@@ -1,0 +1,5 @@
+Feature
+  wiele populacji
+
+Fix
+  naprawić znikajace przeszkody
