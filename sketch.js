@@ -22,7 +22,7 @@ function setup() {
   sec = 0;
   gen = 1;
 
-  createCanvas(400, 300);
+  createCanvas(canvasSize[0], canvasSize[1]);
   if (drawStats)
     statCanv = new p5(statCanvas);
 

@@ -17,6 +17,10 @@ function obstacle(x,y,width,height){
 }
 function checkObstacles(){
   for(var i = 0; i < obstacles.length; i++){
+      if (obstacles[i].width < 5)
+        obstacles[i].width = 5
+      if (obstacles[i].height < 5)
+        obstacles[i].height = 5
       if(obstacles[i].width > width)
         obstacles[i].width = width
       if(obstacles[i].height > height)

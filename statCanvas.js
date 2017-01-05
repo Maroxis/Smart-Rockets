@@ -3,7 +3,7 @@ var statCanvas = function( c ) {
   c.setup = function() {
     c.score = 0;
     c.prevScore = 0;
-    c.createCanvas(400, 300);
+    c.createCanvas(canvasSize[0], canvasSize[1]);
     c.noLoop();
     c.step = width/histLenght
   };
