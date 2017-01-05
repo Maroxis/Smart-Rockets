@@ -32,6 +32,7 @@ function mousePressed() {
 function mouseDragged() {
   if (draggedObst && selectedObst)
     return
+    
   if (draggedObst) {
     draggedObst.x = parseInt(mouseX - mX)
     draggedObst.y = parseInt(mouseY - mY)
@@ -40,6 +41,8 @@ function mouseDragged() {
     selectedObst.width = parseInt(mouseX - mX)
     selectedObst.height = parseInt(mouseY - mY)
   }
+  
+  checkObstacles()
   
 }
 
