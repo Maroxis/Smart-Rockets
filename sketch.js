@@ -17,6 +17,10 @@ var gen
 
 
 function setup() {
+  // convert colors
+  for(var i = 0; i < popColors.length; i++)
+    popColors[i] = color(popColors[i][0],popColors[i][1],popColors[i][2],128)
+
   frameRate(60)
   count = 0;
   sec = 0;
@@ -29,10 +33,13 @@ function setup() {
   dom() // dom.js
   ///rockets
   //rocket = new Rocket();
-  var col = color(0,255,255,128)
-  for(var i = 0; i < popNum; i++)
-    populations.push(new Population(popSize))
-
+  //var col = color(0,255,255,128)
+  for(var i = 0; i < popNum; i++){
+    if(popColors[i])
+      populations.push(new Population(popSize,popColors[i]))
+    else
+      populations.push(new Population(popSize))
+  }
   //fitness
   maxFitness = width * targetBonus * timeBonus;
   maxFitness = floor(pow(maxFitness, 2))
