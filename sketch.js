@@ -15,7 +15,8 @@ var count
 var sec
 var gen
 
-
+function preload(){
+}
 function setup() {
   // convert colors
   for(var i = 0; i < popColors.length; i++)
@@ -27,8 +28,10 @@ function setup() {
   gen = 1;
 
   createCanvas(canvasSize[0], canvasSize[1]);
+  uiCanv = new p5(uiCanvas);
   if (drawStats)
     statCanv = new p5(statCanvas);
+  
 
   dom() // dom.js
   ///rockets

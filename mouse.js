@@ -5,7 +5,7 @@ var selectedObst = null
 var obj = {};
 
 function mousePressed() {
-
+  console.log(uiCanvas.mouseX)
   mX = mouseX
   mY = mouseY
 
