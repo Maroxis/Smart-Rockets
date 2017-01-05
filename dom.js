@@ -1,6 +1,6 @@
 //Dom
 var lifeP
-var fitnessP
+//var fitnessP
 var btStart
 var btPause
 var btResume
@@ -11,7 +11,7 @@ var timeI
 function dom()
 {
   lifeP = createP();
-  fitnessP = createP();
+  //fitnessP = createP();
   
   btAddObst = createButton('Add Obstacle');
   btAddObst.id("btAddObst");
