@@ -19,23 +19,33 @@ function mousePressed() {
         draggedObst = obstacles[i]
         mX = mX - obstacles[i].x
         mY = mY - obstacles[i].y
+      }
+      else if (mouseButton == RIGHT) {
         selectedObst = obstacles[i]
-        obstW.value(obstacles[i].width)
-        obstH.value(obstacles[i].height)
+        mX = mX - obstacles[i].width
+        mY = mY - obstacles[i].height
       }
     }
 }
 
 
 function mouseDragged() {
+  if (draggedObst && selectedObst)
+    return
   if (draggedObst) {
     draggedObst.x = parseInt(mouseX - mX)
     draggedObst.y = parseInt(mouseY - mY)
   }
+  else if(selectedObst){
+    selectedObst.width = parseInt(mouseX - mX)
+    selectedObst.height = parseInt(mouseY - mY)
+  }
+  
 }
 
 function mouseReleased() {
   mX = 0
   mY = 0
+  selectedObst = null;
   draggedObst = null;
 }

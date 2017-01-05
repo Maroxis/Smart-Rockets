@@ -43,29 +43,14 @@ function dom()
 
   inp.parent(qucikSimDiv)
   inp.attribute("type", "number");
-  
-  obstPropDiv = createDiv("");
-  var obstTable = select('#tbObst');
-  obstTable.parent(obstPropDiv)
-  obstW = select('#obstW');
-  obstH = select('#obstH');
-  obstW.changed(obstWCh); 
-  obstH.changed(obstHCh); 
-}
-function obstWCh(){
-  selectedObst.width = parseInt(obstW.value())
-}
-function obstHCh(){
-  selectedObst.height = parseInt(obstH.value())
 }
 
 function startSim() {
   resumeSim()
   btStart.hide()
   btAddObst.hide()
-  
-  
 }
+
 function pauseSim(){
   state = 0;
   btPause.hide()
@@ -73,6 +58,7 @@ function pauseSim(){
   //btStart.elt.innerHTML = "Resume"
   clearInterval(timeI)
 }
+
 function resumeSim(){
   state = 1;
   btResume.hide()
