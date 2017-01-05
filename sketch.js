@@ -80,7 +80,7 @@ function makeSimulation() {
     populations[i].evaluate();
     populations[i].selection();
     populations[i].LAFit += populations[i].AFit
-    populations[i].his.log(populations[i].AFit, finished, gen)
+    populations[i].his.log(populations[i].AFit, populations[i].HFit, gen)
   }
     if (gen % longH === 0 || gen == 1) {
       for(var i = 0; i < populations.length; i++){

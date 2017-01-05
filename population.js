@@ -29,7 +29,6 @@ function Population(size,col) {
   }
 
   this.evaluate = function() {
-      finished = 0;
       this.HFit = 0;
       for (var i = 0; i < this.popsize; i++) {
       this.rockets[i].calcFitness();

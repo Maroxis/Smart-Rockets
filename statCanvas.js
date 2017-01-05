@@ -73,25 +73,6 @@ var statCanvas = function( c ) {
         c.prevScore = c.score
       }
       c.prevScore = 0
-
-       /* 
-      c.stroke(0,255,0,192)
-      for(var i = 0; i < statHist.el.length; i++) // hit target / Total
-      {
-        c.score = map(statHist.el[i][1],0,populations[i].popsize,0,c.height-42)
-        if(c.prevScore !== 0)
-          c.line(i*c.step,c.height - c.prevScore,(i+1)*c.step,c.height - c.score)
-        else
-          c.line(i*c.step,c.height - c.score,(i+1)*c.step,c.height - c.score)
-          
-        c.push()
-        c.strokeWeight(4)
-        c.point((i+1)*c.step,c.height - c.score)
-        c.pop()
-        c.prevScore = c.score
-      }
-      c.prevScore = 0
-    */
     }
   }
 };
