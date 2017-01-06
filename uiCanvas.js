@@ -26,6 +26,10 @@ var uiCanvas = function( c ) {
     c.pop()
     
     c.btResume()
+    
+    loadImage("assets/addObstBt.png", function(img) {
+    c.image(img,4,(c.cellSize - img.height)/2+c.cellSize)
+    });
   };
   c.btResume = function(){
     //clear
@@ -51,16 +55,30 @@ var uiCanvas = function( c ) {
   }
   c.mousePressed = function() {
     if(c.mouseX > 0 && c.mouseX < 40){
-      if(c.mouseY > 0 && c.mouseY < c.cellSize ){
-        if(state === 0){
-          c.btPause()
-          state = 1;
-          timeI =setInterval(timer, 1000)
-        }
-        else{
-          c.btResume()
-          state = 0;
-          clearInterval(timeI)
+      for(var i = 0; i < c.cells; i++){
+        if(c.mouseY > c.cellSize*i && c.mouseY < c.cellSize*(i+1)){
+          switch(i){
+            
+            case 0: //buton 1
+              if(state === 0){
+                c.btPause()
+                state = 1;
+                timeI =setInterval(timer, 1000)
+              }
+              else{
+                c.btResume()
+                state = 0;
+                clearInterval(timeI)
+              }
+            break;
+            
+            case 1:
+               obstacles.push( new obstacle(25,25,20,20) )
+            break;
+            
+            default:
+            break;
+          }
         }
       }
     }
