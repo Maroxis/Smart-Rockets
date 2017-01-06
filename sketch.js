@@ -108,8 +108,13 @@ function draw() {
   
   if (drawStats)
     statCanv.drawScore()
-
-  lifeP.html("frames: " + count + " sec: " + sec + " Generation: " + gen);
+  var m = floor(sec/60)
+  if(m < 10)
+    m = "0"+m
+  var s = sec%60
+  if(s < 10)
+    s = "0"+s
+  lifeP.html("time: " + m+":"+ s + " Generation: " + gen + " frames: " + count);
   //fitnessP.html("Highest fitness: " + population.HFit + " Avarge fitness: " + population.AFit);
 
   //rockets

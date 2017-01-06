@@ -34,7 +34,7 @@ function Rocket(dna,col) {
     var d = dist(this.pos.x, this.pos.y, target.x, target.y);
     //var maxd = dist(this.pos.x, this.pos.y, width, height);
 
-    this.fitness = floor(map(d, 0, width, width, 1));
+    this.fitness = floor(map(d, 0, width, width/10, 1));
     
     if (this.completed) {
       //finished += 1
@@ -44,7 +44,7 @@ function Rocket(dna,col) {
     if (this.crashed) {
       this.fitness /= crashPenalty;
     }
-    this.fitness = pow(this.fitness,3)
+    this.fitness = pow(this.fitness,2)
     this.fitness = floor(this.fitness)
 
   }

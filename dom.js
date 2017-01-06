@@ -4,8 +4,7 @@ var lifeP
 var inp
 var timeI
 
-function dom()
-{
+function dom(){
   lifeP = createP();
   //fitnessP = createP();
   

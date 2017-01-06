@@ -13,9 +13,9 @@ var canvasSize = [400,400] //
 var statCanvasSize = [250,400] // 
 
 // multiply fitness score
-var targetBonus = 10;
-var timeBonus = 20;
-var crashPenalty = 30;
+var targetBonus = 2;
+var timeBonus = 4;
+var crashPenalty = 3;
 
 // history stats
 var drawStats = true;
