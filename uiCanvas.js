@@ -5,8 +5,10 @@ var uiCanvas = function( c ) {
     c.noLoop();
     c.bgCol = color(164,182,164)
     c.cells = 4
+    c.genNum = "0005"
+    c.typing = false
+    c.noType;
     c.mouseX = mouseX
-    //pauseBt.loadPixels();
     c.cellSize = canvasSize[1]/c.cells
   };
 
@@ -30,6 +32,11 @@ var uiCanvas = function( c ) {
     loadImage("assets/addObstBt.png", function(img) {
     c.image(img,4,(c.cellSize - img.height)/2+c.cellSize)
     });
+    
+    loadImage("assets/skipGenBt.png", function(img) {
+    c.image(img,4,(c.cellSize - img.height-16)/2+c.cellSize*2)
+    });
+    c.genNumber(c.genNum);
   };
   c.btResume = function(){
     //clear
@@ -53,6 +60,17 @@ var uiCanvas = function( c ) {
     c.image(img,4,(c.cellSize - img.height)/2)
     });
   }
+  c.genNumber = function (num){
+    // for(var i = num.toString().length;i!=4;i++)
+    //   num = "0" + num
+    c.fill(c.bgCol)
+    c.rect(2,c.cellSize*7/3+30,c.width-4,12);
+    c.push()
+    c.textSize(15)
+    c.fill(0);
+    c.text(num, 4, (c.cellSize + 50)/2+c.cellSize*2);
+    c.pop()
+  }
   c.mousePressed = function() {
     if(c.mouseX > 0 && c.mouseX < 40){
       for(var i = 0; i < c.cells; i++){
@@ -60,28 +78,66 @@ var uiCanvas = function( c ) {
           switch(i){
             
             case 0: //buton 1
-              if(state === 0){
-                c.btPause()
-                state = 1;
-                timeI =setInterval(timer, 1000)
-              }
-              else{
-                c.btResume()
-                state = 0;
-                clearInterval(timeI)
-              }
-            break;
+              if(state === 0)
+                c.resume()
+              else
+                c.pause()
+              break;
             
             case 1:
                obstacles.push( new obstacle(25,25,20,20) )
-            break;
+              break;
             
+            case 2:
+                quickSim(parseInt(c.genNum))
+              break;
+              
             default:
-            break;
+              break;
           }
         }
       }
     }
+  }
+  c.keyTyped= function(){
+    console.log(keyCode)
+    if(c.keyCode == 13)
+      quickSim(parseInt(c.genNum))
+      
+    if(c.keyCode == 32){
+      if(state === 0)
+        c.resume()
+      else
+        c.pause()
+    }
+      
+    if(c.keyCode > 47 && c.keyCode < 58){
+      clearTimeout(c.noType)
+      c.noType = setTimeout(c.notTyping,1500)
+      if(c.typing){
+        c.genNum = "" + c.genNum[1] + c.genNum[2] + c.genNum[3]  + (c.keyCode - 48)
+        c.genNumber(c.genNum)
+      }
+      else{
+        c.genNum = "000" + (c.keyCode - 48)
+        c.genNumber(c.genNum)
+      }
+      
+      c.typing = true;
+    }
+  }
+  c.notTyping = function (){
+    c.typing = false;
+  }
+  c.resume = function(){
+    c.btPause()
+    state = 1;
+    timeI = setInterval(timer, 1000)
+  }
+  c.pause = function(){
+    c.btResume()
+    state = 0;
+    clearInterval(timeI)
   }
   
 }

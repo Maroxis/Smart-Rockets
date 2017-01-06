@@ -50,12 +50,12 @@ function setup() {
   target = createVector(width / 2, 50);
 }
 
-function quickSim() {
+function quickSim(ammount) {
+  
   noLoop()
   while (!makeSimulation()) // finish curent generation
   {}
-  var ammount = parseInt(inp.value()) - 1
-
+  ammount--
   while (ammount > 0) {
     if (makeSimulation()) // do simulation, if full gen completed amount --
       ammount--
