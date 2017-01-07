@@ -137,11 +137,11 @@ var uiCanvas = function( c ) {
   c.resume = function(){
     c.btPause()
     state = 1;
-    timeI = setInterval(timer, 1000)
+    infoCanv.time = setInterval(infoCanv.timer, 1000)
   }
   c.pause = function(){
     c.btResume()
     state = 0;
-    clearInterval(timeI)
+    clearInterval(infoCanv.time)
   }
 }

@@ -31,9 +31,7 @@ function setup() {
   uiCanv = new p5(uiCanvas);
   if (drawStats)
     statCanv = new p5(statCanvas);
-  
-
-  dom() // dom.js
+  infoCanv = new p5(infoCanvas);
   ///rockets
   //rocket = new Rocket();
   //var col = color(0,255,255,128)
@@ -99,23 +97,14 @@ function makeSimulation() {
 }
 
 function draw() {
-
   background(0);
 
   if (state !== 0)
     makeSimulation()
     
-  
   if (drawStats)
     statCanv.drawScore()
-  var m = floor(sec/60)
-  if(m < 10)
-    m = "0"+m
-  var s = sec%60
-  if(s < 10)
-    s = "0"+s
-  lifeP.html("time: " + m+":"+ s + " Generation: " + gen + " frames: " + count);
-  //fitnessP.html("Highest fitness: " + population.HFit + " Avarge fitness: " + population.AFit);
+  infoCanv.update()
 
   //rockets
   for(var i = 0; i < populations.length; i++){

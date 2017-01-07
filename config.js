@@ -10,7 +10,7 @@ popColors.push([32,192,32])
 popColors.push([32,192,192])
 
 var canvasSize = [400,400] // 
-var statCanvasSize = [250,400] // 
+var statCanvasSize = [260,400] // 
 
 // multiply fitness score
 var targetBonus = 2;
@@ -19,6 +19,6 @@ var crashPenalty = 3;
 
 // history stats
 var drawStats = true;
-var histLenght = 30
-var LHstLenght = 30
+var histLenght = 40
+var LHstLenght = 40
 var longH = 50 // log avarge of X generations
