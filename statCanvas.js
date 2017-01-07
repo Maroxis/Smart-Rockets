@@ -6,6 +6,7 @@ var statCanvas = function( c ) {
     c.createCanvas(statCanvasSize[0], statCanvasSize[1]);
     c.noLoop();
     c.step = c.width/(histLenght-1)
+    c.lstep = c.width/(LHstLenght-1)
   };
 
   c.draw = function() {
@@ -57,16 +58,16 @@ var statCanvas = function( c ) {
         c.score = map(populations[i].longHis.el[j][0],0,TopFit,0,c.height-42)
         
         if(j !== 0){
-          c.line((j-1)*c.step,c.height - c.prevScore,j*c.step,c.height - c.score)
+          c.line((j-1)*c.lstep,c.height - c.prevScore,j*c.lstep,c.height - c.score)
           c.push()
           c.strokeWeight(4)
-          c.point(j*c.step,c.height - c.score)
+          c.point(j*c.lstep,c.height - c.score)
           c.pop()
         }
          else{
           c.push()
           c.strokeWeight(4)
-          c.point(j*c.step,c.height - c.score)
+          c.point(j*c.lstep,c.height - c.score)
           c.pop()
          }
         c.prevScore = c.score

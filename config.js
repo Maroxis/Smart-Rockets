@@ -19,6 +19,6 @@ var crashPenalty = 3;
 
 // history stats
 var drawStats = true;
-var histLenght = 40
-var LHstLenght = 40
-var longH = 50 // log avarge of X generations
+var histLenght = 50
+var LHstLenght = 30
+var longH = 100 // log avarge of X generations
