@@ -3,7 +3,6 @@
 // http://patreon.com/codingrainbow
 // Code for: https://youtu.be/bGz7mv2vD6g
 
-
 function Rocket(dna,col) {
   
   this.pos = createVector(width / 2, height);
@@ -31,22 +30,24 @@ function Rocket(dna,col) {
   }
 
   this.calcFitness = function() {
-    var d = dist(this.pos.x, this.pos.y, target.x, target.y);
-    //var maxd = dist(this.pos.x, this.pos.y, width, height);
-
-    this.fitness = floor(map(d, 0, width, width/10, 1));
+    
     
     if (this.completed) {
       //finished += 1
+      this.fitness = width/10
       this.fitness *= targetBonus;
       this.fitness *= (map(this.lifespan,20,lifespan,timeBonus,1))
     }
-    if (this.crashed) {
-      this.fitness /= crashPenalty;
+    else{
+      var d = dist(this.pos.x, this.pos.y, target.x, target.y);
+      this.fitness = floor(map(d, 0, width, width/10, 1));
+      this.fitness = floor(this.fitness)
+      if (this.crashed) 
+        this.fitness /= crashPenalty;
     }
-    this.fitness = pow(this.fitness,2)
     this.fitness = floor(this.fitness)
-
+    this.fitness = pow(this.fitness,2)
+    
   }
 
   this.update = function() {

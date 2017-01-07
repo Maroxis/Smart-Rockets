@@ -64,7 +64,7 @@ function quickSim(ammount) {
 function makeSimulation() {
   var genDone = true;
   for(var i = 0; i < populations.length; i++){
-    if(!populations[i].run())
+    if(!populations[i].run() && genDone)
       genDone = false;
   }
   if(genDone)

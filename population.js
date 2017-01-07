@@ -39,7 +39,6 @@ function Population(size,col) {
     if(this.HFit > this.TFit)
       this.TFit = this.HFit
     this.AFit = floor(this.AFit/this.popsize)
-
   }
 
   this.selection = function() {
@@ -59,7 +58,7 @@ function Population(size,col) {
   this.run = function() {
     var GenFin = true // all rockets crashed or finished
     for (var i = 0; i < this.popsize; i++) {
-      if(!this.rockets[i].update())
+      if(!this.rockets[i].update() && GenFin)
          GenFin = false
     }
     return GenFin
