@@ -1,9 +1,0 @@
-#tbObst{
-  border-collapse:collapse;
-}
-#tbObst,#tbObst th,#tbObst td {
-   border: 1px solid black;
-}
-#tbObst input{
-  width:60px;
-}

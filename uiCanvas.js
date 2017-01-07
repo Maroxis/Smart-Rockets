@@ -37,6 +37,9 @@ var uiCanvas = function( c ) {
     c.image(img,4,(c.cellSize - img.height-16)/2+c.cellSize*2)
     });
     c.genNumber(c.genNum);
+    loadImage("assets/settingsBt.png", function(img) {
+    c.image(img,4,(c.cellSize - img.height)/2+c.cellSize*3)
+    });
   };
   c.btResume = function(){
     //clear
@@ -91,7 +94,9 @@ var uiCanvas = function( c ) {
             case 2:
                 quickSim(parseInt(c.genNum))
               break;
-              
+            
+            case 3:
+              break;
             default:
               break;
           }
@@ -139,5 +144,4 @@ var uiCanvas = function( c ) {
     state = 0;
     clearInterval(timeI)
   }
-  
 }

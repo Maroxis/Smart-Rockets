@@ -1,5 +1,5 @@
 Feature
-  wiele populacji
-
+  ui settings
+  better history logs
 Fix
-  naprawić znikajace przeszkody
+  
