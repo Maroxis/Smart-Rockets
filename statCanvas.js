@@ -5,7 +5,7 @@ var statCanvas = function( c ) {
     c.prevScore = 0;
     c.createCanvas(statCanvasSize[0], statCanvasSize[1]);
     c.noLoop();
-    c.step = c.width/histLenght
+    c.step = c.width/(histLenght-1)
   };
 
   c.draw = function() {
@@ -35,20 +35,15 @@ var statCanvas = function( c ) {
     for(var i = 0; i < populations.length; i++){
       
       c.stroke(populations[i].col.levels[0],populations[i].col.levels[1],populations[i].col.levels[2],62)
-      c.fill(populations[i].col.levels[0],populations[i].col.levels[1],populations[i].col.levels[2],62)
+      c.fill(populations[i].col.levels[0],populations[i].col.levels[1],populations[i].col.levels[2],50)
       c.beginShape();
      
       for(var j = 0; j < populations[i].his.el.length; j++) // Avarge fitt / Total
       {
         c.score = map(populations[i].his.el[j][0],0,TopFit,0,c.height-42) 
-        c.vertex((j+1)*c.step, c.height - c.score);
-   
-        // c.push()
-        // c.strokeWeight(4)
-        // c.point((i+1)*c.step,c.height - c.score)
-        // c.pop()
-        
+        c.vertex(j*c.step, c.height - c.score);
       }
+      //c.vertex(populations[i].his.el.length*c.step, c.height - c.score);
       c.vertex((populations[i].his.el.length)*c.step, height);
       c.vertex(0, height);
       c.endShape(CLOSE);
@@ -61,18 +56,23 @@ var statCanvas = function( c ) {
       {
         c.score = map(populations[i].longHis.el[j][0],0,TopFit,0,c.height-42)
         
-        if(c.prevScore !== 0)
-          c.line(j*c.step,c.height - c.prevScore,(j+1)*c.step,c.height - c.score)
-        else
-          c.line(j*c.step,c.height - c.score,(j+1)*c.step,c.height - c.score)
-        
-        c.push()
-        c.strokeWeight(4)
-        c.point((j+1)*c.step,c.height - c.score)
-        c.pop()
+        if(j !== 0){
+          c.line((j-1)*c.step,c.height - c.prevScore,j*c.step,c.height - c.score)
+          c.push()
+          c.strokeWeight(4)
+          c.point(j*c.step,c.height - c.score)
+          c.pop()
+        }
+         else{
+          c.push()
+          c.strokeWeight(4)
+          c.point(j*c.step,c.height - c.score)
+          c.pop()
+         }
         c.prevScore = c.score
       }
-      c.prevScore = 0
+        if(populations[i].longHis.el.length !== 0)
+        c.prevScore = map(populations[i].longHis.el[0][0],0,TopFit,0,c.height-42)
     }
   }
 };
