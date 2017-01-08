@@ -49,13 +49,24 @@ function setup() {
 }
 
 function quickSim(ammount) {
+  
   noLoop()
+  
+  var d = new Date()
+  var time = d.getTime()
+  
   while (!makeSimulation()) // finish curent generation
   {}
   while (ammount > 1) { //ammount - current gen => 1
     if (makeSimulation()) // do simulation, if full gen completed amount --
       ammount--
   }
+  
+  d = new Date()
+  time = d.getTime() - time
+  var dec = (time+"").split(".")
+  console.log(floor(time/1000)+"."+(time+"").split("."))
+  
   loop()
 }
 
