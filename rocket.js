@@ -11,27 +11,23 @@ function Rocket(dna,col) {
   this.lifespan = 0;
   this.completed = false;
   this.crashed = false;
-  if(!col)
-  {
-    this.col = color(0,255,255,128)
-  }
-  else
-    this.col = col
-
-  if (dna) {
-    this.dna = dna;
-  } else {
-    this.dna = new DNA();
-  }
   this.fitness = 0;
+  
+  if(col)
+    this.col = col
+  else
+    this.col = color(0,255,255,128)
+
+  if(dna) 
+    this.dna = dna;
+  else 
+    this.dna = new DNA();
 
   this.applyForce = function(force) {
     this.acc.add(force);
   }
 
   this.calcFitness = function() {
-    
-    
     if (this.completed) {
       //finished += 1
       this.fitness = width/10
@@ -47,39 +43,32 @@ function Rocket(dna,col) {
     }
     this.fitness = floor(this.fitness)
     this.fitness = pow(this.fitness,2)
-    
   }
 
   this.update = function() {
-    
     if(this.crashed || this.completed)
       return true
     
-    var d = dist(this.pos.x, this.pos.y, target.x, target.y);
-    if (d < 10) {
-      this.completed = true;
-      this.pos = target.copy();
-    }
-      
-    for (var i = 0; i < obstacles.length; i++)
-      if (obstacles[i].collide(this)) {
-        this.crashed = true;
-      }
-
-    if (this.pos.x > width || this.pos.x < 0) {
-      this.crashed = true;
-    }
-    if (this.pos.y > height || this.pos.y < 0) {
-      this.crashed = true;
-    }
-
     this.applyForce(this.dna.genes[count]);
     this.vel.add(this.acc);
     this.pos.add(this.vel);
     this.acc.mult(0);
-    this.vel.limit(4);
+    //this.vel.limit(4);
     this.lifespan++
     
+    var d = dist(this.pos.x, this.pos.y, target.x, target.y);
+    if (d < 10) {
+      this.pos = target.copy();
+      return this.completed = true;
+    }
+      
+    for (var i = 0; i < obstacles.length; i++)
+      if (obstacles[i].collide(this.pos.x,this.pos.y)) {
+        return this.crashed = true;
+      }
+
+    if (this.pos.x > width || this.pos.x < 0 || this.pos.y > height || this.pos.y < 0)
+      return this.crashed = true;
   }
 
   this.show = function() {

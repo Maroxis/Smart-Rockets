@@ -49,12 +49,10 @@ function setup() {
 }
 
 function quickSim(ammount) {
-  
   noLoop()
   while (!makeSimulation()) // finish curent generation
   {}
-  ammount--
-  while (ammount > 0) {
+  while (ammount > 1) { //ammount - current gen => 1
     if (makeSimulation()) // do simulation, if full gen completed amount --
       ammount--
   }

@@ -3,9 +3,9 @@ function obstacle(x,y,width,height){
   this.y = y
   this.width = width
   this.height = height
-  this.collide = function(obj){
-    if(obj.pos.x > this.x && obj.pos.x < this.x + this.width &&
-    obj.pos.y > this.y && obj.pos.y < this.y + this.height)
+  this.collide = function(ox,oy){
+    if(ox > this.x && ox < this.x + this.width &&
+    oy > this.y && oy < this.y + this.height)
       return true
     else
       return false
@@ -17,21 +17,21 @@ function obstacle(x,y,width,height){
 }
 function checkObstacles(){
   for(var i = 0; i < obstacles.length; i++){
-      if (obstacles[i].width < 5)
-        obstacles[i].width = 5
-      if (obstacles[i].height < 5)
-        obstacles[i].height = 5
+      if(obstacles[i].width < 5)
+         obstacles[i].width = 5
+      if(obstacles[i].height < 5)
+         obstacles[i].height = 5
       if(obstacles[i].width > width)
-        obstacles[i].width = width
+         obstacles[i].width = width
       if(obstacles[i].height > height)
-        obstacles[i].height = height
+         obstacles[i].height = height
       if(obstacles[i].x < 0)
-        obstacles[i].x = 0
+         obstacles[i].x = 0
       if(obstacles[i].x + obstacles[i].width > width)
-        obstacles[i].x = width - obstacles[i].width
+         obstacles[i].x = width - obstacles[i].width
       if(obstacles[i].y < 0)
-        obstacles[i].y = 0
+         obstacles[i].y = 0
       if(obstacles[i].y + obstacles[i].height > height)
-        obstacles[i].y = height - obstacles[i].height
+         obstacles[i].y = height - obstacles[i].height
   }
 }

@@ -38,7 +38,7 @@ function Population(size,col) {
     }
     if(this.HFit > this.TFit)
       this.TFit = this.HFit
-    this.AFit = floor(this.AFit/this.popsize)
+    this.AFit = floor(this.AFit/this.popsize)*1
   }
 
   this.selection = function() {
@@ -64,11 +64,11 @@ function Population(size,col) {
     return GenFin
   }
   this.acceptReject = function(){
-      while(true){
-      var rocket = random(this.rockets)
-      var r = random(0,this.HFit)
-      if(rocket.fitness > r)
-        return rocket.dna;
+      do{
+        var rocket = random(this.rockets)
+        var r = random(0,this.HFit)
       }
+      while(rocket.fitness < r)
+      return rocket.dna;
   }
 }

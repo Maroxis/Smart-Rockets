@@ -105,7 +105,6 @@ var uiCanvas = function( c ) {
     }
   }
   c.keyTyped= function(){
-    console.log(keyCode)
     if(c.keyCode == 13)
       quickSim(parseInt(c.genNum))
       
