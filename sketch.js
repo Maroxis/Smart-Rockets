@@ -18,7 +18,9 @@ var gen
 function preload(){
 }
 function setup() {
-  // convert colors
+   if (typeof(Worker) !== "undefined") {
+     console.log(" Worker ok")
+  }
   for(var i = 0; i < popColors.length; i++)
     popColors[i] = color(popColors[i][0],popColors[i][1],popColors[i][2],128)
 
@@ -49,28 +51,17 @@ function setup() {
 }
 
 function quickSim(ammount) {
-  
   noLoop()
-  
-  var d = new Date()
-  var time = d.getTime()
-  
-  while (!makeSimulation()) // finish curent generation
-  {}
-  while (ammount > 1) { //ammount - current gen => 1
-    if (makeSimulation()) // do simulation, if full gen completed amount --
-      ammount--
-  }
-  
-  d = new Date()
-  time = d.getTime() - time
-  var dec = (time+"").split(".")
-  console.log(floor(time/1000)+"."+(time+"").split("."))
-  
-  loop()
+  qsWorker = new Worker("quickGen.js")
+  qsWorker.onmessage = function (oEvent) {
+    console.log("Worker said : " + oEvent.data);
+    loop()
+  };
+  qsWorker.postMessage(ammount)
 }
 
 function makeSimulation() {
+        
   var genDone = true;
   for(var i = 0; i < populations.length; i++){
     if(!populations[i].run() && genDone)

@@ -68,7 +68,6 @@ Population = function(size,col) {
     return GenFin
   }
   Population.prototype.acceptReject = function(){
-    
       do{
         var rocket = random(this.rockets)
         var r = random(0,this.HFit)
