@@ -3,16 +3,10 @@
 // http://patreon.com/codingrainbow
 // Code for: https://youtu.be/bGz7mv2vD6g
 
-function Rocket(dna,col) {
-  
+Rocket = function(dna,col) {
   this.pos = createVector(width / 2, height);
   this.vel = createVector();
   this.acc = createVector();
-  this.lifespan = 0;
-  this.completed = false;
-  this.crashed = false;
-  this.fitness = 0;
-  
   if(col)
     this.col = col
   else
@@ -22,12 +16,17 @@ function Rocket(dna,col) {
     this.dna = dna;
   else 
     this.dna = new DNA();
-
-  this.applyForce = function(force) {
+}
+  Rocket.prototype.lifespan = 0;
+  Rocket.prototype.completed = false;
+  Rocket.prototype.crashed = false;
+  Rocket.prototype.fitness = 0;
+  
+  Rocket.prototype.applyForce = function(force) {
     this.acc.add(force);
   }
 
-  this.calcFitness = function() {
+  Rocket.prototype.calcFitness = function() {
     if (this.completed) {
       //finished += 1
       this.fitness = width/10
@@ -45,7 +44,7 @@ function Rocket(dna,col) {
     this.fitness = pow(this.fitness,2)
   }
 
-  this.update = function() {
+  Rocket.prototype.update = function() {
     if(this.crashed || this.completed)
       return true
     
@@ -71,7 +70,7 @@ function Rocket(dna,col) {
       return this.crashed = true;
   }
 
-  this.show = function() {
+  Rocket.prototype.show = function() {
     push();
     noStroke();
     fill(this.col);
@@ -81,5 +80,3 @@ function Rocket(dna,col) {
     rect(0, 0, 25, 5);
     pop();
   }
-
-}

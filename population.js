@@ -3,14 +3,10 @@
 // http://patreon.com/codingrainbow
 // Code for: https://youtu.be/bGz7mv2vD6g
 
-function Population(size,col) {
+Population = function(size,col) {
   this.rockets = [];
   this.popsize = size;
   this.matingpool = [];
-  this.HFit = 0; //top of curent gen
-  this.AFit = 0; //avarge
-  this.LAFit = 0; // longterm avarge fitness
-  this.TFit = 0; //top of all time
   this.his = new history(histLenght)
   this.longHis = new history(LHstLenght)
   
@@ -27,10 +23,16 @@ function Population(size,col) {
   for (var i = 0; i < this.popsize; i++) {
     this.rockets[i] = new Rocket(null,this.col);
   }
-
-  this.evaluate = function() {
+}
+  Population.prototype.HFit = 0; //top of curent gen
+  Population.prototype.AFit = 0; //avarge
+  Population.prototype.LAFit = 0; // longterm avarge fitness
+  Population.prototype.TFit = 0; //top of all time
+  
+  Population.prototype.evaluate = function() {
       this.HFit = 0;
-      for (var i = 0; i < this.popsize; i++) {
+      var siz = this.popsize;
+      for (var i = 0; i < siz; i++) {
       this.rockets[i].calcFitness();
       this.AFit += this.rockets[i].fitness;
       if (this.rockets[i].fitness > this.HFit)
@@ -41,9 +43,10 @@ function Population(size,col) {
     this.AFit = floor(this.AFit/this.popsize)*1
   }
 
-  this.selection = function() {
+  Population.prototype.selection = function() {
     var newRockets = [];
-    for (var i = 0; i < this.rockets.length; i++) {
+    var length = this.rockets.length
+    for (var i = 0; i < length; i++) {
  
       var parentA = this.acceptReject()
       var parentB = this.acceptReject();
@@ -55,20 +58,22 @@ function Population(size,col) {
     this.rockets = newRockets;
   }
 
-  this.run = function() {
+  Population.prototype.run = function() {
     var GenFin = true // all rockets crashed or finished
-    for (var i = 0; i < this.popsize; i++) {
+    var size = this.popsize
+    for (var i = 0; i < size; i++) {
       if(!this.rockets[i].update() && GenFin)
          GenFin = false
     }
     return GenFin
   }
-  this.acceptReject = function(){
+  Population.prototype.acceptReject = function(){
+    
       do{
         var rocket = random(this.rockets)
         var r = random(0,this.HFit)
+        var fit = rocket.fitness
       }
-      while(rocket.fitness < r)
+      while(fit < r)
       return rocket.dna;
   }
-}
