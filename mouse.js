@@ -9,12 +9,8 @@ function mousePressed() {
   mX = mouseX
   mY = mouseY
 
-  var p = createVector(mX, mY)
-  obj = {
-    pos: p
-  }
   for (var i = 0; i < obstacles.length; i++)
-    if (obstacles[i].collide(obj)) {
+    if (obstacles[i].collide(mX,mY)) {
       if (mouseButton == LEFT) {
         draggedObst = obstacles[i]
         mX = mX - obstacles[i].x
