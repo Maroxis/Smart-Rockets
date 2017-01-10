@@ -4,9 +4,13 @@
 // Code for: https://youtu.be/bGz7mv2vD6g
 
 Rocket = function(dna,col) {
-  this.pos = createVector(width / 2, height);
-  this.vel = createVector();
-  this.acc = createVector();
+  this.pos = new p5.Vector(width / 2, height);
+  this.vel = new p5.Vector()
+  this.acc = new p5.Vector()
+  this.lifespan = 0;
+  this.completed = false;
+  this.crashed = false;
+  this.fitness = 0;
   if(col)
     this.col = col
   else
@@ -17,10 +21,7 @@ Rocket = function(dna,col) {
   else 
     this.dna = new DNA();
 }
-  Rocket.prototype.lifespan = 0;
-  Rocket.prototype.completed = false;
-  Rocket.prototype.crashed = false;
-  Rocket.prototype.fitness = 0;
+  
   
   Rocket.prototype.applyForce = function(force) {
     this.acc.add(force);

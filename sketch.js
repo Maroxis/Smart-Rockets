@@ -9,6 +9,7 @@ var maxFitness;
 var statCanv
 var obstacles = [];
 var target;
+var workers =[];
 
 //Timer
 var count
@@ -52,12 +53,17 @@ function setup() {
 
 function quickSim(ammount) {
   noLoop()
-  qsWorker = new Worker("quickGen.js")
-  qsWorker.onmessage = function (oEvent) {
-    console.log("Worker said : " + oEvent.data);
+  for(var i = 0; i < popNum; i++){
+  workers[i] = new Worker("quickGen.js")
+  workers[i].onmessage = function (oEvent) {
+    console.log(oEvent.data);
     loop()
   };
-  qsWorker.postMessage(ammount)
+  var population = JSON.stringify(populations[i])
+  var message = {p: population, amm: ammount, id: i}
+  workers[i].postMessage(message)
+  }
+  
 }
 
 function makeSimulation() {

@@ -6,7 +6,6 @@
 Population = function(size,col) {
   this.rockets = [];
   this.popsize = size;
-  this.matingpool = [];
   this.his = new history(histLenght)
   this.longHis = new history(LHstLenght)
   
