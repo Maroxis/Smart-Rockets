@@ -3,6 +3,7 @@
 onmessage = function (oEvent) {
   var ammount = oEvent.data.amm
   var population = JSON.parse(oEvent.data.p)
+  rebuild(population)
   var d = new Date()
   var time = d.getTime()
   
@@ -45,4 +46,14 @@ function makeSim(population) {
   
     return true; //whole generation completed
   }
+}
+function rebuild(population){
+  reattachMethods(population,Population)
+  for (var i = 0; i < 20; i++){
+    reattachMethods(population.rockets[i],Rocket)
+    reattachMethods(population.rockets[i].dna,DNA)
+  }
+}
+function reattachMethods(serialized,originalclass) {
+    serialized.__proto__ = originalclass.prototype; 
 }
