@@ -1,4 +1,4 @@
-//self.importScripts('sketch.js','config.js')//,'population.js'
+self.importScripts('sketch.js','config.js','population.js','rocket.js','dna.js')
 
 onmessage = function (oEvent) {
   var ammount = oEvent.data.amm
