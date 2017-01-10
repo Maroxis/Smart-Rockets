@@ -4,9 +4,9 @@
 // Code for: https://youtu.be/bGz7mv2vD6g
 
 Rocket = function(dna,col) {
-  this.pos = new p5.Vector(width / 2, height);
-  this.vel = new p5.Vector()
-  this.acc = new p5.Vector()
+  this.pos = {x:width / 2,y:height};
+  this.vel = {x:0,y:0}
+  this.acc = {x:0,y:0}
   this.lifespan = 0;
   this.completed = false;
   this.crashed = false;
@@ -24,7 +24,8 @@ Rocket = function(dna,col) {
   
   
   Rocket.prototype.applyForce = function(force) {
-    this.acc.add(force);
+    this.acc.x += force.x;
+    this.acc.y += force.y;
   }
 
   Rocket.prototype.calcFitness = function() {
@@ -50,15 +51,18 @@ Rocket = function(dna,col) {
       return true
     
     this.applyForce(this.dna.genes[count]);
-    this.vel.add(this.acc);
-    this.pos.add(this.vel);
-    this.acc.mult(0);
+    this.vel.x += this.acc.x
+    this.vel.y += this.acc.y
+    this.pos.x += this.vel.x;
+    this.pos.y += this.vel.y;
+    this.acc.x = this.acc.y = 0
     //this.vel.limit(4);
     this.lifespan++
     
     var d = dist(this.pos.x, this.pos.y, target.x, target.y);
     if (d < 10) {
-      this.pos = target.copy();
+      this.pos.x = target.x;
+      this.pos.y = target.y;
       return this.completed = true;
     }
       
@@ -76,7 +80,7 @@ Rocket = function(dna,col) {
     noStroke();
     fill(this.col);
     translate(this.pos.x, this.pos.y);
-    rotate(this.vel.heading());
+    rotate((Math.atan2(this.vel.y, this.vel.x)));
     rectMode(CENTER);
     rect(0, 0, 25, 5);
     pop();
