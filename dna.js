@@ -10,7 +10,9 @@ function DNA(genes) {
   } else {
     this.genes = [];
     for (var i = 0; i < lifespan; i++) {
-      this.genes[i] = p5.Vector.random2D();
+      v1 = random(-1,1)
+      v2 = random(-1,1)
+      this.genes[i] = {x: v1, y: v2};
       
       // if (i !== 0) {
       //   while (p5.Vector.angleBetween(this.genes[i], this.genes[i - 1]) > PI/2) {
@@ -18,7 +20,8 @@ function DNA(genes) {
       //   }
       //}
     
-      this.genes[i].setMag(maxforce);
+      this.genes[i].x *= maxforce
+      this.genes[i].y *= maxforce
       }
     }
   
@@ -39,8 +42,11 @@ function DNA(genes) {
   this.mutation = function() {
     for (var i = 0; i < this.genes.length; i++) {
       if (random(1) < mutationRate) {
-        this.genes[i] = p5.Vector.random2D();
-        this.genes[i].setMag(maxforce);
+        v1 = random(-1,1)
+        v2 = random(-1,1)
+        this.genes[i] = {x: v1, y: v2};
+        this.genes[i].x *= maxforce
+        this.genes[i].y *= maxforce
       }
     }
   }

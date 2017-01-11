@@ -1,6 +1,7 @@
 self.importScripts('sketch.js','config.js','population.js','rocket.js','dna.js')
 
 onmessage = function (oEvent) {
+  count = 0
   var ammount = oEvent.data.amm
   var population = JSON.parse(oEvent.data.p)
   rebuild(population)
@@ -22,7 +23,6 @@ onmessage = function (oEvent) {
 };
 
 function makeSim(population) {
-  console.log(population)
   if(population.run())
     count = lifespan;
   else

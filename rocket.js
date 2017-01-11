@@ -31,25 +31,24 @@ Rocket = function(dna,col) {
   Rocket.prototype.calcFitness = function() {
     if (this.completed) {
       //finished += 1
-      this.fitness = width/10
+      this.fitness = canvasSize[0]/10
       this.fitness *= targetBonus;
-      this.fitness *= (map(this.lifespan,20,lifespan,timeBonus,1))
+      this.fitness *= ((this.lifespan-20)/(lifespan-20))*(1-timeBonus)+timeBonus
     }
     else{
-      var d = dist(this.pos.x, this.pos.y, target.x, target.y);
-      this.fitness = floor(map(d, 0, width, width/10, 1));
-      this.fitness = floor(this.fitness)
+      var d = Math.sqrt( (this.pos.x-target.x)*(this.pos.x-target.x) + (this.pos.y-target.y)*(this.pos.y-target.y) )
+      this.fitness = Math.floor((d/canvasSize[0])*(1-canvasSize[0]/10)+canvasSize[0]/10);
+      this.fitness = Math.floor(this.fitness)
       if (this.crashed) 
         this.fitness /= crashPenalty;
     }
-    this.fitness = floor(this.fitness)
-    this.fitness = pow(this.fitness,2)
+    this.fitness = Math.floor(this.fitness)
+    this.fitness = Math.pow(this.fitness,2)
   }
 
   Rocket.prototype.update = function() {
     if(this.crashed || this.completed)
       return true
-    
     this.applyForce(this.dna.genes[count]);
     this.vel.x += this.acc.x
     this.vel.y += this.acc.y
@@ -59,7 +58,7 @@ Rocket = function(dna,col) {
     //this.vel.limit(4);
     this.lifespan++
     
-    var d = dist(this.pos.x, this.pos.y, target.x, target.y);
+    var d = Math.sqrt( (this.pos.x-target.x)*(this.pos.x-target.x) + (this.pos.y-target.y)*(this.pos.y-target.y) )
     if (d < 10) {
       this.pos.x = target.x;
       this.pos.y = target.y;
@@ -71,7 +70,7 @@ Rocket = function(dna,col) {
         return this.crashed = true;
       }
 
-    if (this.pos.x > width || this.pos.x < 0 || this.pos.y > height || this.pos.y < 0)
+    if (this.pos.x > canvasSize[0] || this.pos.x < 0 || this.pos.y > canvasSize[1] || this.pos.y < 0)
       return this.crashed = true;
   }
 
