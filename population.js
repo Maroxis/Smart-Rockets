@@ -6,8 +6,8 @@
 Population = function(size,col) {
   this.rockets = [];
   this.popsize = size;
-  this.his = new history(histLenght)
-  this.longHis = new history(LHstLenght)
+  this.his = new hist(histLenght)
+  this.longHis = new hist(LHstLenght)
   
   if(!col)
   {
@@ -39,7 +39,7 @@ Population = function(size,col) {
     }
     if(this.HFit > this.TFit)
       this.TFit = this.HFit
-    this.AFit = floor(this.AFit/this.popsize)*1
+    this.AFit = Math.floor(this.AFit/this.popsize)*1
   }
 
   Population.prototype.selection = function() {
@@ -49,6 +49,7 @@ Population = function(size,col) {
  
       var parentA = this.acceptReject()
       var parentB = this.acceptReject();
+      
       
       var child = parentA.crossover(parentB);
       child.mutation();
@@ -68,8 +69,9 @@ Population = function(size,col) {
   }
   Population.prototype.acceptReject = function(){
       do{
-        var rocket = random(this.rockets)
-        var r = random(0,this.HFit)
+        var ind = Math.floor(Math.random() * this.rockets.length)
+        var rocket = this.rockets[ind]
+        var r = Math.random()*this.HFit
         var fit = rocket.fitness
       }
       while(fit < r)

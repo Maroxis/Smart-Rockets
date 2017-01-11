@@ -1,4 +1,4 @@
-self.importScripts('sketch.js','config.js','population.js','rocket.js','dna.js')
+self.importScripts('sketch.js','config.js','population.js','rocket.js','dna.js','history.js')
 
 onmessage = function (oEvent) {
   count = 0
@@ -32,6 +32,7 @@ function makeSim(population) {
     population.evaluate();
     population.selection();
     population.LAFit += population.AFit
+    console.log(population)
     population.his.log(population.AFit, population.HFit, gen)
     if (gen % longH === 0 || gen == 1) {
       for(var i = 0; i < populations.length; i++){
@@ -49,6 +50,8 @@ function makeSim(population) {
 }
 function rebuild(population){
   reattachMethods(population,Population)
+  reattachMethods(population.his,hist)
+  reattachMethods(population.longHis,hist)
   for (var i = 0; i < 20; i++){
     reattachMethods(population.rockets[i],Rocket)
     reattachMethods(population.rockets[i].dna,DNA)

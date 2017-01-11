@@ -4,7 +4,7 @@
 // Code for: https://youtu.be/bGz7mv2vD6g
 
 Rocket = function(dna,col) {
-  this.pos = {x:width / 2,y:height};
+  this.pos = {x:canvasSize[0] / 2,y:canvasSize[1]};
   this.vel = {x:0,y:0}
   this.acc = {x:0,y:0}
   this.lifespan = 0;

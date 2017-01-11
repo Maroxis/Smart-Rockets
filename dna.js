@@ -4,7 +4,7 @@
 // Code for: https://youtu.be/bGz7mv2vD6g
 //var maxForceDiff = 0.5
 
-function DNA(genes) {
+DNA = function(genes) {
   if (genes) {
     this.genes = genes;
   } else {
@@ -24,11 +24,12 @@ function DNA(genes) {
       this.genes[i].y *= maxforce
       }
     }
+}
   
 
-  this.crossover = function(partner) {
+  DNA.prototype.crossover = function(partner) {
     var newgenes = [];
-    var mid = floor(random(this.genes.length));
+    var mid = Math.floor(Math.random()*this.genes.length);
     for (var i = 0; i < this.genes.length; i++) {
       if (i > mid) {
         newgenes[i] = this.genes[i];
@@ -39,15 +40,14 @@ function DNA(genes) {
     return new DNA(newgenes);
   }
 
-  this.mutation = function() {
+  DNA.prototype.mutation = function() {
     for (var i = 0; i < this.genes.length; i++) {
-      if (random(1) < mutationRate) {
-        v1 = random(-1,1)
-        v2 = random(-1,1)
+      if (Math.random() < mutationRate) {
+        v1 = Math.random()*2 -1
+        v2 = Math.random()*2 -1
         this.genes[i] = {x: v1, y: v2};
         this.genes[i].x *= maxforce
         this.genes[i].y *= maxforce
       }
     }
   }
-}
