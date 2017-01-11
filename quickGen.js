@@ -32,7 +32,6 @@ function makeSim(population) {
     population.evaluate();
     population.selection();
     population.LAFit += population.AFit
-    console.log(population)
     population.his.log(population.AFit, population.HFit, gen)
     if (gen % longH === 0 || gen == 1) {
       for(var i = 0; i < populations.length; i++){

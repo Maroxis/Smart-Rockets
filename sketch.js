@@ -48,7 +48,6 @@ function setup() {
   maxFitness = width * targetBonus * timeBonus;
   maxFitness = floor(pow(maxFitness, 2))
   
-  target = {x:width / 2, y:50}
 }
 
 function quickSim(ammount) {

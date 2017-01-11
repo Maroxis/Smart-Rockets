@@ -12,6 +12,8 @@ popColors.push([32,192,192])
 var canvasSize = [400,400] // 
 var statCanvasSize = [260,400] // 
 
+target = {x:canvasSize[0] / 2, y:50}
+
 // multiply fitness score
 var targetBonus = 2;
 var timeBonus = 4;
