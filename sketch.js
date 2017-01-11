@@ -51,6 +51,7 @@ function setup() {
       populations[id] = p
       workersDone++
       if(workersDone == popNum){
+        count = 0;
         gen += oEvent.data.amm
         console.log(oEvent.data.amm+" gen. done in " +oEvent.data.time+ " sec" )
         loop()
@@ -77,6 +78,7 @@ function reattachMethods(serialized,originalclass) {
 }
 
 function quickSim(ammount) {
+  uiCanv.pause()
   noLoop()
   workersDone = 0
   for(var i = 0; i < popNum; i++){
