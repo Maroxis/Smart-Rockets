@@ -1,10 +1,20 @@
-self.importScripts('sketch.js','config.js','population.js','rocket.js','dna.js','history.js')
-
-onmessage = function (oEvent) {
-  count = 0
-  var ammount = oEvent.data.amm
-  var population = JSON.parse(oEvent.data.p)
+self.importScripts('sketch.js','config.js','population.js','rocket.js','dna.js','history.js','obstacle.js')
+function init(oEvent){
+  count = oEvent.data.c
+  ammount = oEvent.data.amm
+  population = JSON.parse(oEvent.data.p)
   rebuild(population)
+  obstacles = []
+  obstacles = JSON.parse(oEvent.data.obst);
+  console.log(obstacles)
+  // for(var i = 0; i < obstacles.length; i++){
+  //   reattachMethods(obstacles[i],Obstacle)
+  // }
+  console.log(obstacles)
+}
+onmessage = function (oEvent) {
+  init(oEvent)
+  
   var d = new Date()
   var time = d.getTime()
   

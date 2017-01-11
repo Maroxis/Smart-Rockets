@@ -4,7 +4,10 @@ var mutationRate = 0.01 //DNA
 var popSize = 20 // number of rockets
 var popNum = 3 // nubmer of populations
 var popColors = [] // custom pop colors RGB // if not specified color will random
+
+
 var target = {}
+
 popColors.push('rgb(192,32,192)') 
 popColors.push('rgb(32,192,32)')
 popColors.push('rgb(32,192,192)')

@@ -60,7 +60,6 @@ Rocket = function(dna,col) {
       this.pos.y = target.y;
       return this.completed = true;
     }
-      
     for (var i = 0; i < obstacles.length; i++)
       if (obstacles[i].collide(this.pos.x,this.pos.y)) {
         return this.crashed = true;

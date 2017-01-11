@@ -1,20 +1,21 @@
-function obstacle(x,y,width,height){
+Obstacle = function(x,y,width,height){
   this.x = x
   this.y = y
   this.width = width
   this.height = height
-  this.collide = function(ox,oy){
+}
+  Obstacle.prototype.collide = function(ox,oy){
     if(ox > this.x && ox < this.x + this.width &&
     oy > this.y && oy < this.y + this.height)
       return true
     else
       return false
   }
-  this.draw = function(){
+  Obstacle.prototype.draw = function(){
       noStroke()
       rect(this.x, this.y, this.width, this.height);
   }
-}
+
 function checkObstacles(){
   for(var i = 0; i < obstacles.length; i++){
       if(obstacles[i].width < 5)

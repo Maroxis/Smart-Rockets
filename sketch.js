@@ -7,8 +7,8 @@ var state = 0;
 var populations = [];
 var maxFitness;
 var statCanv
+
 var obstacles = [];
-var target;
 var workers =[];
 
 //Timer
@@ -41,22 +41,6 @@ function setup() {
       populations.push(new Population(popSize,popColors[i]))
     else
       populations.push(new Population(popSize))
-      
-    //fill workers
-    workers[i] = new Worker("quickGen.js")
-    workers[i].onmessage = function (oEvent) {
-      var id = oEvent.data.id *1
-      var p = oEvent.data.p
-      rebuild(p)
-      populations[id] = p
-      workersDone++
-      if(workersDone == popNum){
-        count = 0;
-        gen += oEvent.data.amm
-        console.log(oEvent.data.amm+" gen. done in " +oEvent.data.time+ " sec" )
-        loop()
-      }
-   };
   }
   //fitness
   maxFitness = width * targetBonus * timeBonus;
@@ -77,13 +61,37 @@ function reattachMethods(serialized,originalclass) {
     serialized.__proto__ = originalclass.prototype; 
 }
 
+function terminateWorkers(){
+  for(var i = 0; i < popNum; i++){
+  workers[i].terminate()
+  }
+}
 function quickSim(ammount) {
-  uiCanv.pause()
+  
+  for(var i = 0; i < popNum; i++){
+  workers[i] = new Worker("quickGen.js")
+    workers[i].onmessage = function (oEvent) {
+      var id = oEvent.data.id *1
+      var p = oEvent.data.p
+      rebuild(p)
+      populations[id] = p
+      workersDone++
+      if(workersDone == popNum){
+        count = 0;
+        gen += oEvent.data.amm
+        console.log(oEvent.data.amm+" gen. done in " +oEvent.data.time+ " sec" )
+        loop()
+        terminateWorkers()
+      }
+   };
+  }
+  
   noLoop()
   workersDone = 0
   for(var i = 0; i < popNum; i++){
+  var obst =  JSON.stringify(obstacles)
   var population = JSON.stringify(populations[i])
-  var message = {p: population, amm: ammount, id: i}
+  var message = {p: population, amm: ammount, c: count, id: i, obst: obst}
   workers[i].postMessage(message)
   }
 }
@@ -91,30 +99,30 @@ function quickSim(ammount) {
 function makeSimulation() {
         
   var genDone = true;
-  for(var i = 0; i < populations.length; i++){
-    if(!populations[i].run() && genDone)
-      genDone = false;
-  }
+   for(var i = 0; i < populations.length; i++){
+     if(!populations[i].run() && genDone)
+       genDone = false;
+   }
   if(genDone)
     count = lifespan;
   else
     count++;
     
-  if (count == lifespan) {
+   if (count == lifespan) {
 
-  for(var i = 0; i < populations.length; i++){
-    populations[i].evaluate();
-    populations[i].selection();
-    populations[i].LAFit += populations[i].AFit
-    populations[i].his.log(populations[i].AFit, populations[i].HFit, gen)
-  }
-    if (gen % longH === 0 || gen == 1) {
-      for(var i = 0; i < populations.length; i++){
-        populations[i].LAFit /= longH
-        populations[i].longHis.log(populations[i].LAFit, gen) // finished,
-        populations[i].LAFit = 0;
-      }
-    }
+   for(var i = 0; i < populations.length; i++){
+     populations[i].evaluate();
+     populations[i].selection();
+     populations[i].LAFit += populations[i].AFit
+     populations[i].his.log(populations[i].AFit, populations[i].HFit, gen)
+   }
+  //   if (gen % longH === 0 || gen == 1) {
+  //     for(var i = 0; i < populations.length; i++){
+  //       populations[i].LAFit /= longH
+  //       populations[i].longHis.log(populations[i].LAFit, gen) // finished,
+  //       populations[i].LAFit = 0;
+  //     }
+  //   }
 
     gen++;
     count = 0;
