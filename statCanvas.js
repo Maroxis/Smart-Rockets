@@ -34,9 +34,8 @@ var statCanvas = function( c ) {
     c.text("TopS: "+TopFit, 10, 30);
     
     for(var i = 0; i < populations.length; i++){
-      
-      c.stroke(populations[i].col.levels[0],populations[i].col.levels[1],populations[i].col.levels[2],62)
-      c.fill(populations[i].col.levels[0],populations[i].col.levels[1],populations[i].col.levels[2],50)
+      c.stroke(populations[i].col.slice(0, -1)+",0,5)")
+      c.fill(populations[i].col.slice(0, -1)+",0,25)")
       c.beginShape();
      
       for(var j = 0; j < populations[i].his.el.length; j++) // Avarge fitt / Total
@@ -51,7 +50,7 @@ var statCanvas = function( c ) {
     
       c.noFill()
       c.strokeWeight(1)
-      c.stroke(populations[i].col.levels[0],populations[i].col.levels[1],populations[i].col.levels[2],255)
+      c.stroke(populations[i].col)
      
       for(var j = 0; j < populations[i].longHis.el.length; j++) //Longterm Avarge fitt / Total
       {

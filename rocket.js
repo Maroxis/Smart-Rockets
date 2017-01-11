@@ -11,10 +11,7 @@ Rocket = function(dna,col) {
   this.completed = false;
   this.crashed = false;
   this.fitness = 0;
-  if(col)
-    this.col = col
-  else
-    this.col = color(0,255,255,128)
+  this.col = col
 
   if(dna) 
     this.dna = dna;
@@ -76,7 +73,7 @@ Rocket = function(dna,col) {
   Rocket.prototype.show = function() {
     push();
     noStroke();
-    fill(this.col);
+    fill(this.col.slice(0, -1)+",0,5)");
     translate(this.pos.x, this.pos.y);
     rotate((Math.atan2(this.vel.y, this.vel.x)));
     rectMode(CENTER);

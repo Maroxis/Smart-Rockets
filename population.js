@@ -14,7 +14,7 @@ Population = function(size,col) {
     var c1 = floor(random(20,200))
     var c2 = floor(random(20,200))
     var c3 = floor(random(20,200))
-    this.col = color(c1,c2,c3,128)
+    this.col = ""+rgba(c1,c2,c3)
   }
   else
     this.col = col

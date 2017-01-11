@@ -19,7 +19,10 @@ onmessage = function (oEvent) {
   time = d.getTime() - time
   var dec = (time+"").split(".")
   time = (Math.floor(time/1000)+"."+(time+"").split("."))
-  postMessage("worker "+oEvent.data.id+" done in"+time+" sec");//oEvent.data //+ time  + oEvent
+  console.log("worker "+oEvent.data.id+" done in "+time+" sec")
+  JSON.stringify(population)
+  var msg ={p: population, id: oEvent.data.id, amm: oEvent.data.amm}
+  postMessage(msg);//oEvent.data //+ time  + oEvent
 };
 
 function makeSim(population) {

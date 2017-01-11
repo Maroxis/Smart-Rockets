@@ -22,8 +22,6 @@ function setup() {
    if (typeof(Worker) !== "undefined") {
      console.log(" Worker ok")
   }
-  for(var i = 0; i < popColors.length; i++)
-    popColors[i] = color(popColors[i][0],popColors[i][1],popColors[i][2],128)
 
   frameRate(60)
   count = 0;
@@ -43,6 +41,21 @@ function setup() {
       populations.push(new Population(popSize,popColors[i]))
     else
       populations.push(new Population(popSize))
+      
+    //fill workers
+    workers[i] = new Worker("quickGen.js")
+    workers[i].onmessage = function (oEvent) {
+      var amm = oEvent.data.amm
+      var id = oEvent.data.id *1
+      var p = oEvent.data.p
+      rebuild(p)
+      populations[id] = p
+      workersDone++
+      if(workersDone == popNum){
+        loop()
+        gen += amm
+      }
+   };
   }
   //fitness
   maxFitness = width * targetBonus * timeBonus;
@@ -50,19 +63,27 @@ function setup() {
   
 }
 
+function rebuild(population){
+  reattachMethods(population,Population)
+  reattachMethods(population.his,hist)
+  reattachMethods(population.longHis,hist)
+  for (var i = 0; i < 20; i++){
+    reattachMethods(population.rockets[i],Rocket)
+    reattachMethods(population.rockets[i].dna,DNA)
+  }
+}
+function reattachMethods(serialized,originalclass) {
+    serialized.__proto__ = originalclass.prototype; 
+}
+
 function quickSim(ammount) {
   noLoop()
+  workersDone = 0
   for(var i = 0; i < popNum; i++){
-  workers[i] = new Worker("quickGen.js")
-  workers[i].onmessage = function (oEvent) {
-    console.log(oEvent.data);
-    loop()
-  };
   var population = JSON.stringify(populations[i])
   var message = {p: population, amm: ammount, id: i}
   workers[i].postMessage(message)
   }
-  
 }
 
 function makeSimulation() {
