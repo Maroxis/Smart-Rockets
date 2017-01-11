@@ -34,8 +34,8 @@ var statCanvas = function( c ) {
     c.text("TopS: "+TopFit, 10, 30);
     
     for(var i = 0; i < populations.length; i++){
-      c.stroke(populations[i].col.slice(0, -1)+",0,5)")
-      c.fill(populations[i].col.slice(0, -1)+",0,25)")
+      c.stroke(populations[i].col.slice(0, 3) + "a" + populations[i].col.slice(3, -1)+",0.25)")
+      c.fill(populations[i].col.slice(0, 3) + "a" + populations[i].col.slice(3, -1)+",0.25)")
       c.beginShape();
      
       for(var j = 0; j < populations[i].his.el.length; j++) // Avarge fitt / Total

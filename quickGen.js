@@ -19,9 +19,8 @@ onmessage = function (oEvent) {
   time = d.getTime() - time
   var dec = (time+"").split(".")
   time = (Math.floor(time/1000)+"."+(time+"").split("."))
-  console.log("worker "+oEvent.data.id+" done in "+time+" sec")
   JSON.stringify(population)
-  var msg ={p: population, id: oEvent.data.id, amm: oEvent.data.amm}
+  var msg ={p: population, id: oEvent.data.id, amm: oEvent.data.amm, time: time}
   postMessage(msg);//oEvent.data //+ time  + oEvent
 };
 

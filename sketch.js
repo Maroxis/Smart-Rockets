@@ -45,15 +45,15 @@ function setup() {
     //fill workers
     workers[i] = new Worker("quickGen.js")
     workers[i].onmessage = function (oEvent) {
-      var amm = oEvent.data.amm
       var id = oEvent.data.id *1
       var p = oEvent.data.p
       rebuild(p)
       populations[id] = p
       workersDone++
       if(workersDone == popNum){
+        gen += oEvent.data.amm
+        console.log(oEvent.data.amm+" gen. done in " +oEvent.data.time+ " sec" )
         loop()
-        gen += amm
       }
    };
   }

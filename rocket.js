@@ -73,7 +73,7 @@ Rocket = function(dna,col) {
   Rocket.prototype.show = function() {
     push();
     noStroke();
-    fill(this.col.slice(0, -1)+",0,5)");
+    fill((this.col.slice(0, 3) + "a" + this.col.slice(3, -1)+",0.5)"));
     translate(this.pos.x, this.pos.y);
     rotate((Math.atan2(this.vel.y, this.vel.x)));
     rectMode(CENTER);
