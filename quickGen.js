@@ -6,11 +6,10 @@ function init(oEvent){
   rebuild(population)
   obstacles = []
   obstacles = JSON.parse(oEvent.data.obst);
-  console.log(obstacles)
-  // for(var i = 0; i < obstacles.length; i++){
-  //   reattachMethods(obstacles[i],Obstacle)
-  // }
-  console.log(obstacles)
+   for(var i = 0; i < obstacles.length; i++){
+     reattachMethods(obstacles[i],Obstacle)
+   }
+   target = JSON.parse(oEvent.data.tar)
 }
 onmessage = function (oEvent) {
   init(oEvent)
@@ -58,16 +57,4 @@ function makeSim(population) {
   
     return true; //whole generation completed
   }
-}
-function rebuild(population){
-  reattachMethods(population,Population)
-  reattachMethods(population.his,hist)
-  reattachMethods(population.longHis,hist)
-  for (var i = 0; i < 20; i++){
-    reattachMethods(population.rockets[i],Rocket)
-    reattachMethods(population.rockets[i].dna,DNA)
-  }
-}
-function reattachMethods(serialized,originalclass) {
-    serialized.__proto__ = originalclass.prototype; 
 }
