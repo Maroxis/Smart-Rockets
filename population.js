@@ -14,7 +14,7 @@ Population = function(size,col) {
     var c1 = floor(random(20,200))
     var c2 = floor(random(20,200))
     var c3 = floor(random(20,200))
-    this.col = 'rgba('+c1+','+c2+','+c3+')'
+    this.col = 'rgb('+c1+','+c2+','+c3+')'
   }
   else
     this.col = col
@@ -39,7 +39,7 @@ Population = function(size,col) {
     }
     if(this.HFit > this.TFit)
       this.TFit = this.HFit
-    this.AFit = Math.floor(this.AFit/this.popsize)*1
+    this.AFit = Math.floor(this.AFit/(this.popsize+1))*1
   }
 
   Population.prototype.selection = function() {

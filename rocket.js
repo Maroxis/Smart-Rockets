@@ -28,13 +28,13 @@ Rocket = function(dna,col) {
   Rocket.prototype.calcFitness = function() {
     if (this.completed) {
       //finished += 1
-      this.fitness = canvasSize[0]/10*1
+      this.fitness = canvasSize[0]*1
       this.fitness *= targetBonus;
       this.fitness *= ((this.lifespan-20)/(lifespan-20))*(1-timeBonus)+timeBonus
     }
     else{
       var d = Math.sqrt( (this.pos.x-target.x)*(this.pos.x-target.x) + (this.pos.y-target.y)*(this.pos.y-target.y) )
-      this.fitness = Math.floor((d/canvasSize[0])*(1-canvasSize[0]/10)+canvasSize[0]/10);
+      this.fitness = Math.floor((d/canvasSize[0])*(1-canvasSize[0])+canvasSize[0]);
       if (this.crashed) 
         this.fitness /= crashPenalty;
     }

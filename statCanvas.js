@@ -28,14 +28,20 @@ var statCanvas = function( c ) {
       if(populations[i].TFit > TopFit)
         TopFit = populations[i].TFit
     }
-    
+    var TopFitS = TopFit + ""
+    var leng = TopFitS.length
+    if(leng > 5){
+      TopFitS = TopFitS.slice(0, 3)
+      TopFitS += " * 10^"+ leng
+    }
+        
     c.fill(0, 102, 153);
     c.textSize(32);
-    c.text("TopS: "+TopFit, 10, 30);
+    c.text("TopS: "+TopFitS, 10, 30);
     
     for(var i = 0; i < populations.length; i++){
-      c.stroke(populations[i].col.slice(0, 3) + "a" + populations[i].col.slice(3, -1)+",0.25)")
-      c.fill(populations[i].col.slice(0, 3) + "a" + populations[i].col.slice(3, -1)+",0.25)")
+      c.stroke(populations[i].col.slice(0, 3) + "a" + populations[i].col.slice(3, -1)+",0.20)")
+      c.fill(populations[i].col.slice(0, 3) + "a" + populations[i].col.slice(3, -1)+",0.20)")
       c.beginShape();
      
       for(var j = 0; j < populations[i].his.el.length; j++) // Avarge fitt / Total

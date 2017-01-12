@@ -10,9 +10,11 @@ const statCanvasSize = [260,400] //
 
 var target = {x:canvasSize[0] / 2, y:50}
 
-popColors.push('rgb(192,32,192)') 
+popColors.push('rgb(192,32,32)')
 popColors.push('rgb(32,192,32)')
 popColors.push('rgb(32,192,192)')
+popColors.push('rgb(192,192,32)')
+popColors.push('rgb(128,32,192)') 
 
 
 
