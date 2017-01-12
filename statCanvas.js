@@ -55,7 +55,6 @@ var statCanvas = function( c ) {
       for(var j = 0; j < populations[i].longHis.el.length; j++) //Longterm Avarge fitt / Total
       {
         c.score = map(populations[i].longHis.el[j][0],0,TopFit,0,c.height-42)
-        
         if(j !== 0){
           c.line((j-1)*c.lstep,c.height - c.prevScore,j*c.lstep,c.height - c.score)
           c.push()

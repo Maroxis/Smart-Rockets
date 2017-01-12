@@ -1,5 +1,6 @@
 self.importScripts('sketch.js','config.js','population.js','rocket.js','dna.js','history.js','obstacle.js')
 function init(oEvent){
+  gen = oEvent.data.gen
   count = oEvent.data.c
   ammount = oEvent.data.amm
   population = JSON.parse(oEvent.data.p)
@@ -44,12 +45,11 @@ function makeSim(population) {
     population.selection();
     population.LAFit += population.AFit
     population.his.log(population.AFit, population.HFit, gen)
+    
     if (gen % longH === 0 || gen == 1) {
-      for(var i = 0; i < populations.length; i++){
         population.LAFit /= longH
         population.longHis.log(population.LAFit, gen) // finished,
         population.LAFit = 0;
-      }
     }
 
     gen++;

@@ -92,7 +92,7 @@ function quickSim(ammount) {
   var obst =  JSON.stringify(obstacles)
   var population = JSON.stringify(populations[i])
   var tar = JSON.stringify(target)
-  var message = {p: population, amm: ammount, c: count, id: i, obst: obst, tar: tar}
+  var message = {p: population, amm: ammount, c: count, id: i, obst: obst, tar: tar, gen: gen}
   workers[i].postMessage(message)
   }
 }
