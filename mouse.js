@@ -2,29 +2,44 @@ var mX = 0
 var mY = 0
 var draggedObst = null
 var selectedObst = null
+var selectedTarget = false;
 var obj = {};
 
 function mousePressed() {
   mX = mouseX
   mY = mouseY
-
-  for (var i = 0; i < obstacles.length; i++)
-    if (obstacles[i].collide(mX,mY)) {
-      if (mouseButton == LEFT) {
-        draggedObst = obstacles[i]
-        mX = mX - obstacles[i].x
-        mY = mY - obstacles[i].y
-      }
-      else if (mouseButton == RIGHT) {
-        selectedObst = obstacles[i]
-        mX = mX - obstacles[i].width
-        mY = mY - obstacles[i].height
+  if (mouseButton == LEFT && mX > target.x - 8 && mX < target.x + 8 && mY < target.y +8  && mY > target.y -8 )
+    {
+    selectedTarget = true;
+    mX = mX - target.x
+    mY = mY - target.y
+    }
+  else
+  {
+    for (var i = 0; i < obstacles.length; i++){
+      if (obstacles[i].collide(mX,mY)) {
+        if (mouseButton == LEFT) {
+          draggedObst = obstacles[i]
+          mX = mX - obstacles[i].x
+          mY = mY - obstacles[i].y
+        }
+        else if (mouseButton == RIGHT) {
+          selectedObst = obstacles[i]
+          mX = mX - obstacles[i].width
+          mY = mY - obstacles[i].height
+        }
       }
     }
+  }
 }
 
 
 function mouseDragged() {
+  if (selectedTarget){
+    target.x = parseInt(mouseX - mX)
+    target.y = parseInt(mouseY - mY)
+    return
+  }
   if (draggedObst && selectedObst)
     return
     
@@ -46,4 +61,5 @@ function mouseReleased() {
   mY = 0
   selectedObst = null;
   draggedObst = null;
+  selectedTarget = false;
 }
