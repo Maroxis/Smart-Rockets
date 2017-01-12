@@ -4,13 +4,15 @@
 // Code for: https://youtu.be/bGz7mv2vD6g
 //var maxForceDiff = 0.5
 
-function DNA(genes) {
+DNA = function(genes) {
   if (genes) {
     this.genes = genes;
   } else {
     this.genes = [];
     for (var i = 0; i < lifespan; i++) {
-      this.genes[i] = p5.Vector.random2D();
+      v1 = random(-1,1)
+      v2 = random(-1,1)
+      this.genes[i] = {x: v1, y: v2};
       
       // if (i !== 0) {
       //   while (p5.Vector.angleBetween(this.genes[i], this.genes[i - 1]) > PI/2) {
@@ -18,14 +20,16 @@ function DNA(genes) {
       //   }
       //}
     
-      this.genes[i].setMag(maxforce);
+      this.genes[i].x *= maxforce
+      this.genes[i].y *= maxforce
       }
     }
+}
   
 
-  this.crossover = function(partner) {
+  DNA.prototype.crossover = function(partner) {
     var newgenes = [];
-    var mid = floor(random(this.genes.length));
+    var mid = Math.floor(Math.random()*this.genes.length);
     for (var i = 0; i < this.genes.length; i++) {
       if (i > mid) {
         newgenes[i] = this.genes[i];
@@ -36,12 +40,14 @@ function DNA(genes) {
     return new DNA(newgenes);
   }
 
-  this.mutation = function() {
+  DNA.prototype.mutation = function() {
     for (var i = 0; i < this.genes.length; i++) {
-      if (random(1) < mutationRate) {
-        this.genes[i] = p5.Vector.random2D();
-        this.genes[i].setMag(maxforce);
+      if (Math.random() < mutationRate) {
+        v1 = Math.random()*2 -1
+        v2 = Math.random()*2 -1
+        this.genes[i] = {x: v1, y: v2};
+        this.genes[i].x *= maxforce
+        this.genes[i].y *= maxforce
       }
     }
   }
-}

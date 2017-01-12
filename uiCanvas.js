@@ -88,7 +88,7 @@ var uiCanvas = function( c ) {
               break;
             
             case 1:
-               obstacles.push( new obstacle(25,25,20,20) )
+               obstacles.push( new Obstacle(25,25,20,20) )
               break;
             
             case 2:
@@ -137,10 +137,12 @@ var uiCanvas = function( c ) {
     c.btPause()
     state = 1;
     infoCanv.time = setInterval(infoCanv.timer, 1000)
+    loop()
   }
   c.pause = function(){
     c.btResume()
     state = 0;
     clearInterval(infoCanv.time)
+    noLoop()
   }
 }

@@ -7,8 +7,9 @@ var state = 0;
 var populations = [];
 var maxFitness;
 var statCanv
+
 var obstacles = [];
-var target;
+var workers =[];
 
 //Timer
 var count
@@ -18,9 +19,9 @@ var gen
 function preload(){
 }
 function setup() {
-  // convert colors
-  for(var i = 0; i < popColors.length; i++)
-    popColors[i] = color(popColors[i][0],popColors[i][1],popColors[i][2],128)
+   if (typeof(Worker) !== "undefined") {
+     console.log(" Worker ok")
+  }
 
   frameRate(60)
   count = 0;
@@ -44,58 +45,85 @@ function setup() {
   //fitness
   maxFitness = width * targetBonus * timeBonus;
   maxFitness = floor(pow(maxFitness, 2))
-    //target
-  target = createVector(width / 2, 50);
+  
 }
 
+function rebuild(population){
+  reattachMethods(population,Population)
+  reattachMethods(population.his,hist)
+  reattachMethods(population.longHis,hist)
+  for (var i = 0; i < 20; i++){
+    reattachMethods(population.rockets[i],Rocket)
+    reattachMethods(population.rockets[i].dna,DNA)
+  }
+}
+function reattachMethods(serialized,originalclass) {
+    serialized.__proto__ = originalclass.prototype; 
+}
+
+function terminateWorkers(){
+  for(var i = 0; i < popNum; i++){
+  workers[i].terminate()
+  }
+}
 function quickSim(ammount) {
   
-  noLoop()
-  
-  var d = new Date()
-  var time = d.getTime()
-  
-  while (!makeSimulation()) // finish curent generation
-  {}
-  while (ammount > 1) { //ammount - current gen => 1
-    if (makeSimulation()) // do simulation, if full gen completed amount --
-      ammount--
+  for(var i = 0; i < popNum; i++){
+  workers[i] = new Worker("quickGen.js")
+    workers[i].onmessage = function (oEvent) {
+      var id = oEvent.data.id *1
+      var p = oEvent.data.p
+      rebuild(p)
+      populations[id] = p
+      workersDone++
+      if(workersDone == popNum){
+        count = 0;
+        gen += oEvent.data.amm
+        console.log(oEvent.data.amm+" gen. done in " +oEvent.data.time+ " sec" )
+        loop()
+        terminateWorkers()
+      }
+   };
   }
   
-  d = new Date()
-  time = d.getTime() - time
-  var dec = (time+"").split(".")
-  console.log(floor(time/1000)+"."+(time+"").split("."))
-  
-  loop()
+  noLoop()
+  workersDone = 0
+  for(var i = 0; i < popNum; i++){
+  var obst =  JSON.stringify(obstacles)
+  var population = JSON.stringify(populations[i])
+  var tar = JSON.stringify(target)
+  var message = {p: population, amm: ammount, c: count, id: i, obst: obst, tar: tar, gen: gen}
+  workers[i].postMessage(message)
+  }
 }
 
 function makeSimulation() {
+        
   var genDone = true;
-  for(var i = 0; i < populations.length; i++){
-    if(!populations[i].run() && genDone)
-      genDone = false;
-  }
+   for(var i = 0; i < populations.length; i++){
+     if(!populations[i].run() && genDone)
+       genDone = false;
+   }
   if(genDone)
     count = lifespan;
   else
     count++;
     
-  if (count == lifespan) {
+   if (count == lifespan) {
 
-  for(var i = 0; i < populations.length; i++){
-    populations[i].evaluate();
-    populations[i].selection();
-    populations[i].LAFit += populations[i].AFit
-    populations[i].his.log(populations[i].AFit, populations[i].HFit, gen)
-  }
-    if (gen % longH === 0 || gen == 1) {
-      for(var i = 0; i < populations.length; i++){
-        populations[i].LAFit /= longH
-        populations[i].longHis.log(populations[i].LAFit, gen) // finished,
-        populations[i].LAFit = 0;
-      }
-    }
+   for(var i = 0; i < populations.length; i++){
+     populations[i].evaluate();
+     populations[i].selection();
+     populations[i].LAFit += populations[i].AFit
+     populations[i].his.log(populations[i].AFit, populations[i].HFit, gen)
+   }
+  //   if (gen % longH === 0 || gen == 1) {
+  //     for(var i = 0; i < populations.length; i++){
+  //       populations[i].LAFit /= longH
+  //       populations[i].longHis.log(populations[i].LAFit, gen) // finished,
+  //       populations[i].LAFit = 0;
+  //     }
+  //   }
 
     gen++;
     count = 0;

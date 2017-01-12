@@ -4,78 +4,77 @@
 // Code for: https://youtu.be/bGz7mv2vD6g
 
 Rocket = function(dna,col) {
-  this.pos = createVector(width / 2, height);
-  this.vel = createVector();
-  this.acc = createVector();
-  if(col)
-    this.col = col
-  else
-    this.col = color(0,255,255,128)
+  this.pos = {x:canvasSize[0] / 2,y:canvasSize[1]};
+  this.vel = {x:0,y:0}
+  this.acc = {x:0,y:0}
+  this.lifespan = 0;
+  this.completed = false;
+  this.crashed = false;
+  this.fitness = 0;
+  this.col = col
 
   if(dna) 
     this.dna = dna;
   else 
     this.dna = new DNA();
 }
-  Rocket.prototype.lifespan = 0;
-  Rocket.prototype.completed = false;
-  Rocket.prototype.crashed = false;
-  Rocket.prototype.fitness = 0;
+  
   
   Rocket.prototype.applyForce = function(force) {
-    this.acc.add(force);
+    this.acc.x += force.x;
+    this.acc.y += force.y;
   }
 
   Rocket.prototype.calcFitness = function() {
     if (this.completed) {
       //finished += 1
-      this.fitness = width/10
+      this.fitness = canvasSize[0]/10*1
       this.fitness *= targetBonus;
-      this.fitness *= (map(this.lifespan,20,lifespan,timeBonus,1))
+      this.fitness *= ((this.lifespan-20)/(lifespan-20))*(1-timeBonus)+timeBonus
     }
     else{
-      var d = dist(this.pos.x, this.pos.y, target.x, target.y);
-      this.fitness = floor(map(d, 0, width, width/10, 1));
-      this.fitness = floor(this.fitness)
+      var d = Math.sqrt( (this.pos.x-target.x)*(this.pos.x-target.x) + (this.pos.y-target.y)*(this.pos.y-target.y) )
+      this.fitness = Math.floor((d/canvasSize[0])*(1-canvasSize[0]/10)+canvasSize[0]/10);
       if (this.crashed) 
         this.fitness /= crashPenalty;
     }
-    this.fitness = floor(this.fitness)
-    this.fitness = pow(this.fitness,2)
+    this.fitness = Math.floor(this.fitness)
+    this.fitness = Math.pow(this.fitness,2)
   }
 
   Rocket.prototype.update = function() {
     if(this.crashed || this.completed)
       return true
-    
     this.applyForce(this.dna.genes[count]);
-    this.vel.add(this.acc);
-    this.pos.add(this.vel);
-    this.acc.mult(0);
+    this.vel.x += this.acc.x
+    this.vel.y += this.acc.y
+    this.pos.x += this.vel.x;
+    this.pos.y += this.vel.y;
+    this.acc.x = this.acc.y = 0
     //this.vel.limit(4);
     this.lifespan++
     
-    var d = dist(this.pos.x, this.pos.y, target.x, target.y);
+    var d = Math.sqrt( (this.pos.x-target.x)*(this.pos.x-target.x) + (this.pos.y-target.y)*(this.pos.y-target.y) )
     if (d < 10) {
-      this.pos = target.copy();
+      this.pos.x = target.x;
+      this.pos.y = target.y;
       return this.completed = true;
     }
-      
     for (var i = 0; i < obstacles.length; i++)
       if (obstacles[i].collide(this.pos.x,this.pos.y)) {
         return this.crashed = true;
       }
 
-    if (this.pos.x > width || this.pos.x < 0 || this.pos.y > height || this.pos.y < 0)
+    if (this.pos.x > canvasSize[0] || this.pos.x < 0 || this.pos.y > canvasSize[1] || this.pos.y < 0)
       return this.crashed = true;
   }
 
   Rocket.prototype.show = function() {
     push();
     noStroke();
-    fill(this.col);
+    fill((this.col.slice(0, 3) + "a" + this.col.slice(3, -1)+",0.5)"));
     translate(this.pos.x, this.pos.y);
-    rotate(this.vel.heading());
+    rotate((Math.atan2(this.vel.y, this.vel.x)));
     rectMode(CENTER);
     rect(0, 0, 25, 5);
     pop();
