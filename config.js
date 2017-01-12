@@ -5,25 +5,24 @@ var popSize = 20 // number of rockets
 var popNum = 3 // nubmer of populations
 var popColors = [] // custom pop colors RGB // if not specified color will random
 
+const canvasSize = [400,400] // 
+const statCanvasSize = [260,400] // 
 
-var target = {}
+var target = {x:canvasSize[0] / 2, y:50}
 
 popColors.push('rgb(192,32,192)') 
 popColors.push('rgb(32,192,32)')
 popColors.push('rgb(32,192,192)')
 
-var canvasSize = [400,400] // 
-var statCanvasSize = [260,400] // 
 
-target = {x:canvasSize[0] / 2, y:50}
 
 // multiply fitness score
-var targetBonus = 2;
-var timeBonus = 4;
-var crashPenalty = 3;
+var targetBonus = 5;
+var timeBonus = 5;
+var crashPenalty = 5;
 
 // history stats
 var drawStats = true;
 var histLenght = 50
 var LHstLenght = 30
-var longH = 100 // log avarge of X generations
+const longH = 100 // log avarge of X generations
