@@ -69,7 +69,7 @@ function terminateWorkers(){
 function quickSim(ammount) {
   
   for(var i = 0; i < popNum; i++){
-  workers[i] = new Worker("quickGen.js")
+  workers[i] = new Worker("./quickGen.js")
     workers[i].onmessage = function (oEvent) {
       var id = oEvent.data.id *1
       var p = oEvent.data.p
