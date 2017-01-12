@@ -1,4 +1,4 @@
-self.importScripts('sketch.js','config.js','population.js','rocket.js','dna.js','history.js','obstacle.js')
+self.importScripts('protoRebuild.js','config.js','population.js','rocket.js','dna.js','history.js','obstacle.js')
 function init(oEvent){
   gen = oEvent.data.gen
   count = oEvent.data.c

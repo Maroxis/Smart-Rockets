@@ -19,10 +19,6 @@ var gen
 function preload(){
 }
 function setup() {
-   if (typeof(Worker) !== "undefined") {
-     console.log(" Worker ok")
-  }
-
   frameRate(60)
   count = 0;
   sec = 0;
@@ -42,48 +38,21 @@ function setup() {
     else
       populations.push(new Population(popSize))
   }
-  //fitness
-  maxFitness = width * targetBonus * timeBonus;
-  maxFitness = floor(pow(maxFitness, 2))
+  //fitness // max possible fitness
+  //maxFitness = width/10 * targetBonus * timeBonus;
+  //maxFitness = floor(pow(maxFitness, 2))
   
-}
-
-function rebuild(population){
-  reattachMethods(population,Population)
-  reattachMethods(population.his,hist)
-  reattachMethods(population.longHis,hist)
-  for (var i = 0; i < 20; i++){
-    reattachMethods(population.rockets[i],Rocket)
-    reattachMethods(population.rockets[i].dna,DNA)
+  if (typeof(Worker) !== "undefined") {
+     console.log(" Threads ok")
+     createWorkers()
   }
 }
-function reattachMethods(serialized,originalclass) {
-    serialized.__proto__ = originalclass.prototype; 
-}
 
-function terminateWorkers(){
-  for(var i = 0; i < popNum; i++){
-  workers[i].terminate()
-  }
-}
 function quickSim(ammount) {
   
-  for(var i = 0; i < popNum; i++){
-  workers[i] = new Worker("./quickGen.js")
-    workers[i].onmessage = function (oEvent) {
-      var id = oEvent.data.id *1
-      var p = oEvent.data.p
-      rebuild(p)
-      populations[id] = p
-      workersDone++
-      if(workersDone == popNum){
-        count = 0;
-        gen += oEvent.data.amm
-        console.log(oEvent.data.amm+" gen. done in " +oEvent.data.time+ " sec" )
-        loop()
-        terminateWorkers()
-      }
-   };
+  if (typeof(Worker) === "undefined") {
+     console.log("sorry threads not supported")
+     return
   }
   
   noLoop()
@@ -117,13 +86,13 @@ function makeSimulation() {
      populations[i].LAFit += populations[i].AFit
      populations[i].his.log(populations[i].AFit, populations[i].HFit, gen)
    }
-  //   if (gen % longH === 0 || gen == 1) {
-  //     for(var i = 0; i < populations.length; i++){
-  //       populations[i].LAFit /= longH
-  //       populations[i].longHis.log(populations[i].LAFit, gen) // finished,
-  //       populations[i].LAFit = 0;
-  //     }
-  //   }
+    if (gen % longH === 0 || gen == 1) {
+      for(var i = 0; i < populations.length; i++){
+        populations[i].LAFit /= longH
+        populations[i].longHis.log(populations[i].LAFit, gen) // finished,
+        populations[i].LAFit = 0;
+      }
+    }
 
     gen++;
     count = 0;
