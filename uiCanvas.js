@@ -71,7 +71,7 @@ var uiCanvas = function( c ) {
     // for(var i = num.toString().length;i!=4;i++)
     //   num = "0" + num
     c.fill(c.bgCol)
-    c.rect(2,c.cellSize*7/3+30,c.width-4,12);
+    c.rect(2,c.cellSize*7/2 + 14 ,c.width-4,12);
     c.push()
     c.textSize(15)
     c.fill(0);
