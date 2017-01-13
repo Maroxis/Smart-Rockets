@@ -12,7 +12,8 @@ function createWorkers(){
           gen += oEvent.data.amm
           console.log(oEvent.data.amm+" gen. done in " +oEvent.data.time+ " sec" )
           loop()
-          //terminateWorkers()
+          if (drawStats)
+			      statCanv.drawScore()
         }
      };
   }
