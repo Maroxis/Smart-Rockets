@@ -4,7 +4,7 @@ var uiCanvas = function( c ) {
     c.createCanvas(40, canvasSize[1]);
     c.noLoop();
     c.bgCol = color(164,182,164)
-    c.cells = 4
+    c.cells = 5
     c.genNum = "0005"
     c.typing = false
     c.noType;
@@ -32,13 +32,17 @@ var uiCanvas = function( c ) {
     loadImage("assets/addObstBt.png", function(img) {
     c.image(img,4,(c.cellSize - img.height)/2+c.cellSize)
     });
+	
+	loadImage("assets/delObstBt.png", function(img) {
+    c.image(img,4,(c.cellSize - img.height)/2+c.cellSize*2)
+    });
     
     loadImage("assets/skipGenBt.png", function(img) {
-    c.image(img,4,(c.cellSize - img.height-16)/2+c.cellSize*2)
+    c.image(img,4,(c.cellSize - img.height-16)/2+c.cellSize*3)
     });
     c.genNumber(c.genNum);
     loadImage("assets/settingsBt.png", function(img) {
-    c.image(img,4,(c.cellSize - img.height)/2+c.cellSize*3)
+    c.image(img,4,(c.cellSize - img.height)/2+c.cellSize*4)
     });
   };
   c.btResume = function(){
@@ -71,7 +75,7 @@ var uiCanvas = function( c ) {
     c.push()
     c.textSize(15)
     c.fill(0);
-    c.text(num, 4, (c.cellSize + 50)/2+c.cellSize*2);
+    c.text(num, 4, (c.cellSize + 50)/2+c.cellSize*3);
     c.pop()
   }
   c.mousePressed = function() {
@@ -92,11 +96,15 @@ var uiCanvas = function( c ) {
 			   saveObstacles()
               break;
             
-            case 2:
+			case 2:
+				obstacles = []
+				saveObstacles()
+				break;
+            case 3:
                 quickSim(parseInt(c.genNum))
               break;
             
-            case 3:
+            case 4:
               break;
             default:
               break;
@@ -138,12 +146,10 @@ var uiCanvas = function( c ) {
     c.btPause()
     state = 1;
     infoCanv.time = setInterval(infoCanv.timer, 1000)
-    loop()
   }
   c.pause = function(){
     c.btResume()
     state = 0;
     clearInterval(infoCanv.time)
-    noLoop()
   }
 }
