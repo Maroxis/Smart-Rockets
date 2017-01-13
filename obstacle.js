@@ -36,3 +36,8 @@ function checkObstacles(){
          obstacles[i].y = height - obstacles[i].height
   }
 }
+function saveObstacles(){
+	var obst = JSON.stringify(obstacles)
+	console.log(obst)
+	localStorage.setItem("obstacles", obst);
+}

@@ -59,6 +59,8 @@ function mouseDragged() {
 function mouseReleased() {
   mX = 0
   mY = 0
+  if(selectedObst || draggedObst)
+	saveObstacles()
   selectedObst = null;
   draggedObst = null;
   selectedTarget = false;

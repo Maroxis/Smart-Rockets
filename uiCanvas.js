@@ -89,6 +89,7 @@ var uiCanvas = function( c ) {
             
             case 1:
                obstacles.push( new Obstacle(25,25,20,20) )
+			   saveObstacles()
               break;
             
             case 2:
