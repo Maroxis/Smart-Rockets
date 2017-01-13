@@ -96,7 +96,10 @@ function makeSimulation() {
 
     gen++;
     count = 0;
-
+     
+    if (drawStats)
+      statCanv.drawScore()
+     
     return true; //whole generation completed
   }
 
@@ -107,9 +110,6 @@ function draw() {
 
   if (state !== 0)
     makeSimulation()
-    
-  if (drawStats)
-    statCanv.drawScore()
   infoCanv.update()
 
   //rockets
