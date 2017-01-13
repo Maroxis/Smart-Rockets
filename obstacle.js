@@ -38,6 +38,5 @@ function checkObstacles(){
 }
 function saveObstacles(){
 	var obst = JSON.stringify(obstacles)
-	console.log(obst)
 	localStorage.setItem("obstacles", obst);
 }
