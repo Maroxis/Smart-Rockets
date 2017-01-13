@@ -28,7 +28,7 @@ var infoCanvas = function( c ) {
   c.update = function(){
     c.noStroke()
     c.fill(168)
-    c.rect(0,13,c.width,c.height-21)
+    c.rect(0,12,c.width,c.height-20)
     c.fill(0)
     var m = c.min
     if(m < 10)
