@@ -1,7 +1,14 @@
 var infoCanvas = function( c ) {
 
   c.setup = function() {
-    c.createCanvas(canvasSize[0] + 40 + statCanvasSize[0] , 40);
+    if(drawStats){
+      c.createCanvas(canvasSize[0] + 40 + statCanvasSize[0] , 40);
+      c.textSize(28)
+    }
+	  else{
+      c.createCanvas(canvasSize[0] + 40, 40);
+      c.textSize(22)
+    }
     
     c.noLoop();
     c.sec = 0;
@@ -23,7 +30,6 @@ var infoCanvas = function( c ) {
     c.fill(168)
     c.rect(0,13,c.width,c.height-21)
     c.fill(0)
-    c.textSize(26)
     var m = c.min
     if(m < 10)
       m = "0"+m
