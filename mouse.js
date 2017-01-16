@@ -5,6 +5,8 @@ var selectedObst = null
 var selectedTarget = false;
 var obj = {};
 
+document.addEventListener('contextmenu', event => event.preventDefault());
+
 function mousePressed() {
   mX = mouseX
   mY = mouseY
