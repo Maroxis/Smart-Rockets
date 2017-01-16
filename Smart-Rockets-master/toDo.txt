@@ -1,5 +1,0 @@
-Feature
-  ui settings
-  better history logs
-Fix
-  
