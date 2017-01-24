@@ -1,4 +1,5 @@
 Obstacle = function(x,y,width,height){
+  this.id = obstacles.length
   this.x = x
   this.y = y
   this.width = width
@@ -17,8 +18,7 @@ Obstacle = function(x,y,width,height){
   }
 
 function checkObstCollision(obstacle,move){
-    if(move){
-      // wals
+    if(move){ //move
       if(obstacle.x < 0)
          obstacle.x = 0
       if(obstacle.x + obstacle.width > width)
@@ -27,6 +27,15 @@ function checkObstCollision(obstacle,move){
          obstacle.y = 0
       if(obstacle.y + obstacle.height > height)
          obstacle.y = height - obstacle.height
+       
+      for(var i = 0; i < obstacles.length; i++){  
+        if(obstacle.id != i &&
+        obstacle.x < obstacles[i].x + obstacles[i].width  &&
+        obstacle.x + obstacle.width > obstacles[i].x &&
+        obstacle.y < obstacles[i].y + obstacles[i].height &&
+        obstacle.y + obstacle.height > obstacles[i].y)
+          {console.log(obstacle.id+" collide with "+i)}
+      }
     } else { // resize
       if(obstacle.width < 5)
          obstacle.width = 5
