@@ -48,13 +48,15 @@ function mouseDragged() {
   if (draggedObst) {
     draggedObst.x = parseInt(mouseX - mX)
     draggedObst.y = parseInt(mouseY - mY)
+    checkObstCollision(draggedObst,true)
   }
   else if(selectedObst){
     selectedObst.width = parseInt(mouseX - mX)
     selectedObst.height = parseInt(mouseY - mY)
+    checkObstCollision(selectedObst,false)
   }
   
-  checkObstacles()
+  
   
 }
 

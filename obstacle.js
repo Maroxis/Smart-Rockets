@@ -16,26 +16,29 @@ Obstacle = function(x,y,width,height){
       rect(this.x, this.y, this.width, this.height);
   }
 
-function checkObstacles(){
-  for(var i = 0; i < obstacles.length; i++){
-      if(obstacles[i].width < 5)
-         obstacles[i].width = 5
-      if(obstacles[i].height < 5)
-         obstacles[i].height = 5
-      if(obstacles[i].width > width)
-         obstacles[i].width = width
-      if(obstacles[i].height > height)
-         obstacles[i].height = height
-      if(obstacles[i].x < 0)
-         obstacles[i].x = 0
-      if(obstacles[i].x + obstacles[i].width > width)
-         obstacles[i].x = width - obstacles[i].width
-      if(obstacles[i].y < 0)
-         obstacles[i].y = 0
-      if(obstacles[i].y + obstacles[i].height > height)
-         obstacles[i].y = height - obstacles[i].height
-  }
+function checkObstCollision(obstacle,move){
+    if(move){
+      // wals
+      if(obstacle.x < 0)
+         obstacle.x = 0
+      if(obstacle.x + obstacle.width > width)
+         obstacle.x = width - obstacle.width
+      if(obstacle.y < 0)
+         obstacle.y = 0
+      if(obstacle.y + obstacle.height > height)
+         obstacle.y = height - obstacle.height
+    } else { // resize
+      if(obstacle.width < 5)
+         obstacle.width = 5
+      if(obstacle.height < 5)
+         obstacle.height = 5
+      if(obstacle.width > width)
+         obstacle.width = width
+      if(obstacle.height > height)
+         obstacle.height = height
+    }
 }
+
 function saveObstacles(){
 	var obst = JSON.stringify(obstacles)
 	localStorage.setItem("obstacles", obst);
