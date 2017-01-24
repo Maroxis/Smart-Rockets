@@ -27,15 +27,7 @@ function checkObstCollision(obstacle,move){
          obstacle.y = 0
       if(obstacle.y + obstacle.height > height)
          obstacle.y = height - obstacle.height
-       
-      for(var i = 0; i < obstacles.length; i++){  
-        if(obstacle.id != i &&
-        obstacle.x < obstacles[i].x + obstacles[i].width  &&
-        obstacle.x + obstacle.width > obstacles[i].x &&
-        obstacle.y < obstacles[i].y + obstacles[i].height &&
-        obstacle.y + obstacle.height > obstacles[i].y)
-          {console.log(obstacle.id+" collide with "+i)}
-      }
+
     } else { // resize
       if(obstacle.width < 5)
          obstacle.width = 5
@@ -46,8 +38,45 @@ function checkObstCollision(obstacle,move){
       if(obstacle.height > height)
          obstacle.height = height
     }
+    
+    for(var i = 0; i < obstacles.length; i++){  
+        if(obstacle.id != i){
+          var c = collide(obstacle,obstacles[i])
+          switch(c){
+            case 'bottom':
+              obstacle.y = obstacles[i].y + obstacles[i].height
+              break;
+            case 'top':
+              obstacle.y = obstacles[i].y - obstacle.height
+              break;
+            case 'left':
+              obstacle.x = obstacles[i].x - obstacle.width
+              break;
+            case 'right':
+              obstacle.x = obstacles[i].x + obstacles[i].width
+              break;
+          }
+        }
+      }
 }
-
+function collide(r1,r2){
+  var dx=(r1.x+r1.width/2)-(r2.x+r2.width/2);
+  var dy=(r1.y+r1.height/2)-(r2.y+r2.height/2);
+  var width=(r1.width+r2.width)/2;
+  var height=(r1.height+r2.height)/2;
+  var crossWidth=width*dy;
+  var crossHeight=height*dx;
+  var collision='none';
+  //
+  if(Math.abs(dx)<=width && Math.abs(dy)<=height){
+    if(crossWidth>crossHeight){
+      collision=(crossWidth>(-crossHeight))?'bottom':'left';
+    }else{
+      collision=(crossWidth>-(crossHeight))?'right':'top';
+    }
+  }
+  return(collision);
+}
 function saveObstacles(){
 	var obst = JSON.stringify(obstacles)
 	localStorage.setItem("obstacles", obst);
