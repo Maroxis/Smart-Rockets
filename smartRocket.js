@@ -52,7 +52,6 @@ SmartRocket = function(dna,col) {
 	for (var i = -2; i < 3; i++){
 		var angle = this.angle+Math.PI*(i/12)
 		
-		stroke(255)
 		var X = this.pos.x-2 - Math.cos(angle) * 30
 		var Y = this.pos.y-2 - Math.sin(angle) * 30
 		//line(this.pos.x-2,this.pos.y,X,Y)
