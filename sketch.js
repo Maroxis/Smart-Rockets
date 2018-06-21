@@ -9,6 +9,7 @@ var maxFitness;
 var statCanv
 
 var obstacles = [];
+var segments = [];
 var workers =[];
 
 //Timer
@@ -125,10 +126,20 @@ function draw() {
     }
   }
   fill(255);
+  
   //obstacles
   for (var i = 0; i < obstacles.length; i++)
     obstacles[i].draw();
   fill(255, 0, 0);
+  
+  //debug outilens
+  /*stroke(242, 41, 222);
+  for (var i = 0; i < segments.length; i ++){
+	  line(segments[i].a.x,segments[i].a.y,segments[i].b.x,segments[i].b.y)
+  }
+  */
+  //stroke(244,131,66)
+  
   //target
   ellipse(target.x, target.y, 16, 16);
 }

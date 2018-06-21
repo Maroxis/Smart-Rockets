@@ -16,6 +16,16 @@ Obstacle = function(x,y,width,height){
       noStroke()
       rect(this.x, this.y, this.width, this.height);
   }
+  
+  Obstacle.prototype.getSegments = function(i) {
+	  
+	var seg = [{a:{x:this.x,y:this.y},b:{x:this.x+this.width,y:this.y}},
+		{a:{x:this.x+this.width,y:this.y},b:{x:this.x+this.width,y:this.y+this.height}},
+		{a:{x:this.x+this.width,y:this.y+this.height},b:{x:this.x,y:this.y+this.height}},
+		{a:{x:this.x,y:this.y+this.height},b:{x:this.x,y:this.y}}]
+		
+	return seg[i]
+}
 
 function checkObstCollision(obstacle,move){
     if(move){ //move
