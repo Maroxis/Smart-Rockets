@@ -1,4 +1,4 @@
-self.importScripts('protoRebuild.js','config.js','population.js','rocket.js','dna.js','history.js','obstacle.js')
+self.importScripts('protoRebuild.js','config.js','population.js','dna.js','history.js','obstacle.js','smartRocket.js','brain.js')
 function init(oEvent){
   gen = oEvent.data.gen
   count = oEvent.data.c
@@ -10,6 +10,8 @@ function init(oEvent){
    for(var i = 0; i < obstacles.length; i++){
      reattachMethods(obstacles[i],Obstacle)
    }
+   segments = []
+   segments = JSON.parse(oEvent.data.seg)
    target = JSON.parse(oEvent.data.tar)
 }
 onmessage = function (oEvent) {
