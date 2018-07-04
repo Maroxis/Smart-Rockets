@@ -11,7 +11,7 @@ DNA = function(genes) {
 		this.inWeights = []
 		this.outWeights = []
 	  
-		for(var i = 0; i < 5; i++){  //input number
+		for(var i = 0; i < inputNumber; i++){  //input number
 			this.inWeights.push([])
 			for(var j = 0; j < brainNodeNum; j++){ //layer number
 				this.inWeights[i].push(Math.random()*2-1)
@@ -31,7 +31,7 @@ DNA = function(genes) {
     var newgenes = {};
     newgenes.inWeights = [];
 	newgenes.outWeights = [];
-	for(var x = 0; x < 5; x++){  //input number
+	for(var x = 0; x < inputNumber; x++){  //input number
 		newgenes.inWeights.push([])
 		for(var j = 0; j < brainNodeNum; j++){ //layer number
 			newgenes.inWeights[x].push(0)
@@ -45,21 +45,15 @@ DNA = function(genes) {
 	}
     
     var mid = Math.floor(Math.random()*this.inWeights.length);
-	//console.log("asd1")
-	//console.log(this,partner)
     for (var i = 0; i < this.inWeights.length; i++) {
-		//console.log(i)
 		for (var j = 0; j < this.inWeights[i].length; j++){
-			//console.log(j)
 			if (j > mid) {
 				newgenes.inWeights[i][j] = this.inWeights[i][j];
 			} else {
-				//console.log(i,j,partner,newgenes[0])
 				newgenes.inWeights[i][j] = partner.inWeights[i][j];
 			}	
 		}
     }
-	//console.log("asd3")
 	for (var i = 0; i < this.outWeights.length; i++) {
 		for (var j = 0; j < this.outWeights[i].length; j++){
 			if (j > mid) {
@@ -69,7 +63,6 @@ DNA = function(genes) {
 			}	
 		}
     }
-	//console.log(newgenes)
 	return new DNA(newgenes)
  
   }
@@ -79,7 +72,6 @@ DNA = function(genes) {
     for (var i = 0; i < this.inWeights.length; i++) {
 		for (var j = 0; j < this.inWeights[i].length; j++){
 			if (Math.random() < mutationRate) {
-				//console.log("mutation in")
 				this.inWeights[i][j] = Math.random()*2 -1
 			}
 		}
@@ -87,7 +79,6 @@ DNA = function(genes) {
 	for (var i = 0; i < this.outWeights.length; i++) {
 		for (var j = 0; j < this.outWeights[i].length; j++){
 			if (Math.random() < mutationRate) {
-				//console.log("mutation out")
 				this.outWeights[i][j] = Math.random()*2 -1
 			}
 		}

@@ -49,13 +49,9 @@ Population = function(size,col) {
  
       var parentA = this.acceptReject()
       var parentB = this.acceptReject();
-      
-	  //console.log(parentA)
-      
+
       var child = parentA.crossover(parentB);
-	  //console.log(child)
       child.mutation();
-		//console.log(child)
       newRockets[i] = new SmartRocket(child,this.col);
     }
     this.rockets = newRockets;

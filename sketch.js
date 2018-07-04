@@ -12,6 +12,7 @@ var obstacles = [];
 var segments = [];
 var workers =[];
 
+
 //Timer
 var count
 var sec
@@ -24,12 +25,14 @@ function setup() {
   count = 0;
   sec = 0;
   gen = 1;
-  
-	if(localStorage.getItem("obstacles") !== null){ 
-	var obst = JSON.parse(localStorage.getItem("obstacles"))
-	for ( var i = 0; i < obst.length; i++)
-		reattachMethods(obst[i],Obstacle)
+	if(localStorage){
+		if(localStorage.getItem("obstacles") !== null){ 
+		var obst = JSON.parse(localStorage.getItem("obstacles"))
+		for ( var i = 0; i < obst.length; i++)
+			reattachMethods(obst[i],Obstacle)
 		obstacles = obst
+		remakeSegments()
+		}
 	}
   createCanvas(canvasSize[0], canvasSize[1]);
   uiCanv = new p5(uiCanvas);

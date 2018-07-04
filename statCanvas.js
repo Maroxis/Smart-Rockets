@@ -40,8 +40,9 @@ var statCanvas = function( c ) {
     c.text("TopS: "+TopFitS, 10, 30);
     
     for(var i = 0; i < populations.length; i++){
-      c.stroke(populations[i].col.slice(0, 3) + "a" + populations[i].col.slice(3, -1)+",0.20)")
-      c.fill(populations[i].col.slice(0, 3) + "a" + populations[i].col.slice(3, -1)+",0.20)")
+		c.stroke(0,0,0,64)
+      //c.stroke(populations[i].col.slice(0, 3) + "a" + populations[i].col.slice(3, -1)+",0.20)")
+      c.fill(populations[i].col.slice(0, 3) + "a" + populations[i].col.slice(3, -1)+",0.15)")
       c.beginShape();
      
       for(var j = 0; j < populations[i].his.el.length; j++) // Avarge fitt / Total
@@ -50,7 +51,7 @@ var statCanvas = function( c ) {
         c.vertex(j*c.step, c.height - c.score);
       }
       //c.vertex(populations[i].his.el.length*c.step, c.height - c.score);
-      c.vertex((populations[i].his.el.length)*c.step, height);
+      c.vertex((populations[i].his.el.length-1)*c.step, height);
       c.vertex(0, height);
       c.endShape(CLOSE);
     
@@ -63,17 +64,11 @@ var statCanvas = function( c ) {
         c.score = map(populations[i].longHis.el[j][0],0,TopFit,0,c.height-42)
         if(j !== 0){
           c.line((j-1)*c.lstep,c.height - c.prevScore,j*c.lstep,c.height - c.score)
-          c.push()
-          c.strokeWeight(4)
-          c.point(j*c.lstep,c.height - c.score)
-          c.pop()
         }
-         else{
-          c.push()
-          c.strokeWeight(4)
-          c.point(j*c.lstep,c.height - c.score)
-          c.pop()
-         }
+		c.push()
+        c.strokeWeight(5)
+        c.point(j*c.lstep,c.height - c.score)
+        c.pop()
         c.prevScore = c.score
       }
         if(populations[i].longHis.el.length !== 0)

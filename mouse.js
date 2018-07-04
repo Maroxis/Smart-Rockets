@@ -63,12 +63,14 @@ function mouseDragged() {
 function mouseReleased() {
   mX = 0
   mY = 0
-  if(selectedObst || draggedObst)
+  if(selectedObst || draggedObst){
 	saveObstacles()
+	remakeSegments()
+  }
   selectedObst = null;
   draggedObst = null;
   selectedTarget = false;
-  remakeSegments()
+  
 }
 
 function remakeSegments(){
