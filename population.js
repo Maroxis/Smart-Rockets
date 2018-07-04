@@ -20,7 +20,7 @@ Population = function(size,col) {
     this.col = col
     
   for (var i = 0; i < this.popsize; i++) {
-    this.rockets[i] = new SmartRocket(null,this.col);
+    this.rockets[i] = new Rocket(null,this.col);
   }
 }
   Population.prototype.HFit = 0; //top of curent gen
@@ -50,13 +50,10 @@ Population = function(size,col) {
       var parentA = this.acceptReject()
       var parentB = this.acceptReject();
       
-	  //console.log(parentA)
       
       var child = parentA.crossover(parentB);
-	  //console.log(child)
       child.mutation();
-		//console.log(child)
-      newRockets[i] = new SmartRocket(child,this.col);
+      newRockets[i] = new Rocket(child,this.col);
     }
     this.rockets = newRockets;
   }

@@ -9,9 +9,7 @@ var maxFitness;
 var statCanv
 
 var obstacles = [];
-var segments = [];
 var workers =[];
-
 
 //Timer
 var count
@@ -69,8 +67,7 @@ function quickSim(ammount) {
   var obst =  JSON.stringify(obstacles)
   var population = JSON.stringify(populations[i])
   var tar = JSON.stringify(target)
-  var seg = JSON.stringify(segments)
-  var message = {p: population, amm: ammount, c: count, id: i, obst: obst, tar: tar, gen: gen, seg: seg}
+  var message = {p: population, amm: ammount, c: count, id: i, obst: obst, tar: tar, gen: gen}
   workers[i].postMessage(message)
   }
 }
@@ -128,20 +125,10 @@ function draw() {
     }
   }
   fill(255);
-  
   //obstacles
   for (var i = 0; i < obstacles.length; i++)
     obstacles[i].draw();
   fill(255, 0, 0);
-  
-  //debug outilens
-  /*stroke(242, 41, 222);
-  for (var i = 0; i < segments.length; i ++){
-	  line(segments[i].a.x,segments[i].a.y,segments[i].b.x,segments[i].b.y)
-  }
-  */
-  //stroke(244,131,66)
-  
   //target
   ellipse(target.x, target.y, 16, 16);
 }
