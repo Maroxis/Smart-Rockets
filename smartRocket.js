@@ -73,25 +73,31 @@ SmartRocket = function(dna,col) {
 			}
 		}
 		if(closestIntersect!= null){
-			var distance = closestIntersect.param
-			if (distance > 15)
-				distance = 1
-			else
-				distance = distance/15
+			var distance = Math.hypot((closestIntersect.x-this.pos.x-2),(closestIntersect.y-this.pos.y)) //distance to nearest wall
+			distance /= 566 //max value for 400/400 canvas, converting into 0-1 range
+			this.sensors.push(distance)
 			
-			this.sensors.push(distance+0.0001)
 			//check if sensor collides with target
+			var trgtDist = Math.hypot((target.x-this.pos.x),(target.y - this.pos.y)) //distance to target
+			trgtDist /= 566 //converting into 0-1 range
+			
+			if(trgtDist > distance){ //if wall is closer than target
+				this.sensors.push(1)
+				continue
+			}
+			
+			//calculating if sensor intersect with target
 			var dist = Math.sqrt((closestIntersect.x-ray.a.x)*(closestIntersect.x-ray.a.x) + (closestIntersect.y - ray.a.y)*(closestIntersect.y - ray.a.y))
 			var far = Math.abs((( target.x-ray.a.x) * (closestIntersect.y-ray.a.y) - (target.y - ray.a.y) * (closestIntersect.x - ray.a.x))/ dist)
-			var lngth = Math.sqrt((target.x-ray.a.x)*(target.x-ray.a.x) + (target.y - ray.a.y)*(target.y - ray.a.y))/400
-			if( far < target.size && lngth < distance+0.15){ //line intersect target && is not blocked by wall
-				this.sensors.push(lngth)
+			
+			if( far < target.size){ //line intersect target && is not blocked by wall
+				this.sensors.push(trgtDist)
 			}
 			else this.sensors.push(1)
 		}
-		else{
-			this.sensors.push(1)  //target not in sight / very far
+		else{ //should not happen but puting here just in case
 			this.sensors.push(0.0001) //obstacle very close
+			this.sensors.push(1)  //target not in sight / very far
 		}
 		
 		
