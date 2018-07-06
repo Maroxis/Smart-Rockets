@@ -31,4 +31,4 @@ Brain.prototype.calculate = function(inputs){
   return this.outputs
 }
 
-var inputNumber = 10; // inputs for brain, global variable for ease of use, change when adding new inputs
+var inputNumber = 12; // inputs for brain, global variable for ease of use, change when adding new inputs

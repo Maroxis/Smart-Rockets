@@ -7,9 +7,12 @@ var state = 0;
 var populations = [];
 var maxFitness;
 var statCanv
+var canvasDiag = 0;
 
 var obstacles = [];
+var segments = [];
 var workers =[];
+
 
 //Timer
 var count
@@ -20,15 +23,18 @@ function preload(){
 }
 function setup() {
   frameRate(60)
+  canvasDiag = Math.ceil(Math.hypot(canvasSize[0],canvasSize[1]))
   count = 0;
   sec = 0;
   gen = 1;
-  
-	if(localStorage.getItem("obstacles") !== null){ 
-	var obst = JSON.parse(localStorage.getItem("obstacles"))
-	for ( var i = 0; i < obst.length; i++)
-		reattachMethods(obst[i],Obstacle)
+	if(localStorage){
+		if(localStorage.getItem("obstacles") !== null){ 
+		var obst = JSON.parse(localStorage.getItem("obstacles"))
+		for ( var i = 0; i < obst.length; i++)
+			reattachMethods(obst[i],Obstacle)
 		obstacles = obst
+		remakeSegments()
+		}
 	}
   createCanvas(canvasSize[0], canvasSize[1]);
   uiCanv = new p5(uiCanvas);
@@ -67,7 +73,9 @@ function quickSim(ammount) {
   var obst =  JSON.stringify(obstacles)
   var population = JSON.stringify(populations[i])
   var tar = JSON.stringify(target)
-  var message = {p: population, amm: ammount, c: count, id: i, obst: obst, tar: tar, gen: gen}
+  var seg = JSON.stringify(segments)
+  var canvD = JSON.stringify(canvasDiag)
+  var message = {p: population, amm: ammount, c: count, id: i, obst: obst, tar: tar, gen: gen, seg: seg,canvD: canvD}
   workers[i].postMessage(message)
   }
 }
@@ -125,10 +133,21 @@ function draw() {
     }
   }
   fill(255);
+  
   //obstacles
   for (var i = 0; i < obstacles.length; i++)
     obstacles[i].draw();
   fill(255, 0, 0);
+  
+  //debug outilens
+  /*stroke(242, 41, 222);
+  for (var i = 0; i < segments.length; i ++){
+	  line(segments[i].a.x,segments[i].a.y,segments[i].b.x,segments[i].b.y)
+  }
+  */
+  //stroke(244,131,66)
+  
   //target
+  stroke(0)
   ellipse(target.x, target.y, 16, 16);
 }
