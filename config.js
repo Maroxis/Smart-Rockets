@@ -4,7 +4,7 @@ var mutationRate = 0.01 //DNA
 const popSize = 40 // number of rockets
 const popNum = 3 // nubmer of populations
 
-const brainNodeNum = inputNumber / 2// * 1 // number of nodes in brain layer
+const brainNodeNum = 12 // number of nodes in brain layer
 
 var debug = false;
 
