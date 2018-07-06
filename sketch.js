@@ -7,6 +7,7 @@ var state = 0;
 var populations = [];
 var maxFitness;
 var statCanv
+var canvasDiag = 0;
 
 var obstacles = [];
 var segments = [];
@@ -22,6 +23,7 @@ function preload(){
 }
 function setup() {
   frameRate(60)
+  canvasDiag = Math.ceil(Math.hypot(canvasSize[0],canvasSize[1]))
   count = 0;
   sec = 0;
   gen = 1;
@@ -72,7 +74,8 @@ function quickSim(ammount) {
   var population = JSON.stringify(populations[i])
   var tar = JSON.stringify(target)
   var seg = JSON.stringify(segments)
-  var message = {p: population, amm: ammount, c: count, id: i, obst: obst, tar: tar, gen: gen, seg: seg}
+  var canvD = JSON.stringify(canvasDiag)
+  var message = {p: population, amm: ammount, c: count, id: i, obst: obst, tar: tar, gen: gen, seg: seg,canvD: canvD}
   workers[i].postMessage(message)
   }
 }
@@ -145,5 +148,6 @@ function draw() {
   //stroke(244,131,66)
   
   //target
+  stroke(0)
   ellipse(target.x, target.y, 16, 16);
 }

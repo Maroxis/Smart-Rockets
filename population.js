@@ -1,8 +1,3 @@
-// Daniel Shiffman
-// http://codingrainbow.com
-// http://patreon.com/codingrainbow
-// Code for: https://youtu.be/bGz7mv2vD6g
-
 Population = function(size,col) {
   this.rockets = [];
   this.popsize = size;

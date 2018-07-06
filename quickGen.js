@@ -13,6 +13,7 @@ function init(oEvent){
    segments = []
    segments = JSON.parse(oEvent.data.seg)
    target = JSON.parse(oEvent.data.tar)
+   canvasDiag = oEvent.data.canvD
 }
 onmessage = function (oEvent) {
   init(oEvent)
