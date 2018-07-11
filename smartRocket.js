@@ -128,7 +128,7 @@ SmartRocket.prototype.gatherInfo = function() {
 	var move = this.brain.calculate(this.sensors)
 		
 	this.acc.x = move[0]*maxforce * Math.cos(this.angle) - move[1]*maxforce * Math.sin(this.angle) //make force relative
-    this.acc.y = move[0]*maxforce * Math.sin(this.angle) + move[1]*maxforce * Math.cos(this.angle) //instead of absolute
+  this.acc.y = move[0]*maxforce * Math.sin(this.angle) + move[1]*maxforce * Math.cos(this.angle) //instead of absolute
 	
 	//this.acc.x = move[0]*maxforce
 	//this.acc.y = move[1]*maxforce

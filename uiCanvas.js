@@ -6,6 +6,7 @@ var uiCanvas = function( c ) {
     c.bgCol = color(164,182,164)
     c.cells = 5
     c.genNum = "0005"
+    c.mapNum = 1
     c.typing = false
     c.noType;
     c.mouseX = mouseX
@@ -13,6 +14,7 @@ var uiCanvas = function( c ) {
   };
 
   c.draw = function() {
+		ctx = c.canvas.getContext("2d")
     c.fill(c.bgCol);
     c.noStroke()
     c.rect(0,0,c.width,c.height);
@@ -30,19 +32,30 @@ var uiCanvas = function( c ) {
     c.btResume()
     
     loadImage("assets/addObstBt.png", function(img) {
-    c.image(img,4,(c.cellSize - img.height)/2+c.cellSize)
+			c.image(img,4,(c.cellSize - img.height)/2+c.cellSize*0.8)
     });
 	
-	loadImage("assets/delObstBt.png", function(img) {
-    c.image(img,4,(c.cellSize - img.height)/2+c.cellSize*2)
+		loadImage("assets/delObstBt.png", function(img) {
+			c.image(img,4,(c.cellSize - img.height)/2+c.cellSize*1.25)
     });
-    
+		
+		loadImage("assets/arrowBt.png", function(img) {
+			ctx.save()
+			ctx.translate(c.canvas.width/2,c.canvas.height/2)
+			ctx.rotate(Math.PI/2)
+			c.image(img,8,-16)
+			ctx.rotate(Math.PI)
+			c.image(img,8,-16)
+			//c.image(img,4,(c.cellSize - img.height)/2+c.cellSize*2)
+			ctx.restore()
+    });
+    c.mapNumber(c.mapNum);
     loadImage("assets/skipGenBt.png", function(img) {
-    c.image(img,4,(c.cellSize - img.height-16)/2+c.cellSize*3)
+			c.image(img,4,(c.cellSize - img.height-16)/2+c.cellSize*3)
     });
     c.genNumber(c.genNum);
     loadImage("assets/settingsBt.png", function(img) {
-    c.image(img,4,(c.cellSize - img.height)/2+c.cellSize*4)
+			c.image(img,4,(c.cellSize - img.height)/2+c.cellSize*4)
     });
   };
   c.btResume = function(){
@@ -78,6 +91,23 @@ var uiCanvas = function( c ) {
     c.text(num, 4, (c.cellSize + 50)/2+c.cellSize*3);
     c.pop()
   }
+	c.mapNumber = function(){
+		c.push()
+		c.fill(c.bgCol)
+    c.rect(2,c.cellSize*2.4 +2,c.width-4,12);
+    c.textSize(15)
+    c.fill(0);
+		
+		c.txt = ""
+		if(c.mapNum < 10)
+			c.txt += "00"
+		else if(c.mapNum < 100)
+			c.txt += "0"
+		c.txt += c.mapNum
+		
+    c.text(c.txt, 8, (c.cellSize + 50)/2+c.cellSize*1.75);
+    c.pop()
+	}
   c.mousePressed = function() {
     if(c.mouseX > 0 && c.mouseX < 40){
       for(var i = 0; i < c.cells; i++){
@@ -90,20 +120,27 @@ var uiCanvas = function( c ) {
               else
                 c.pause()
               break;
-            
             case 1:
-               obstacles.push( new Obstacle(25,25,20,20) )
-			   saveObstacles()
+							if(c.mouseY < c.cellSize*(i+0.5)){
+								obstacles.push( new Obstacle(25,25,20,20) )
+								saveObstacles()
+							}else{
+								//obstacles = []
+								undoObstacle()
+								saveObstacles()
+							}
               break;
-            
-			case 2:
-				obstacles = []
-				saveObstacles()
-				break;
+						case 2:
+							if(c.mouseY < c.cellSize*(i+0.4)){
+								c.nextMap()
+							}else if(c.mouseY > c.cellSize*(i+0.6)){
+								c.prevMap()
+							}
+							c.mapNumber()
+						break;
             case 3:
-                quickSim(parseInt(c.genNum))
-              break;
-            
+              quickSim(parseInt(c.genNum))
+             break;
             case 4:
               break;
             default:
@@ -152,4 +189,48 @@ var uiCanvas = function( c ) {
     state = 0;
     clearInterval(infoCanv.time)
   }
+	
+	c.prevMap = function(){
+		
+		if(c.mapNum == 1){
+			c.saveMap(998)
+			c.mapNum = 999
+		}
+		else{
+			c.saveMap(-1)
+			c.mapNum--
+		}
+	}
+	c.nextMap = function(){
+		if(c.mapNum == 999){
+			c.saveMap(-998)
+			c.mapNum = 1
+		}
+		else{
+			c.saveMap(1)
+			c.mapNum++
+		}
+	}
+	c.saveMap = function(next){
+		console.log(c.mapNum-1,c.mapNum-1+next)
+		maps[c.mapNum-1] = {
+			obst:JSON.stringify(obstacles),
+			target:JSON.stringify(target)
+			}
+		if(maps[c.mapNum+next-1] != undefined){
+			var obst = JSON.parse(maps[c.mapNum+next-1].obst)
+			for ( var i = 0; i < obst.length; i++)
+				reattachMethods(obst[i],Obstacle)
+			obstacles = obst
+			
+			target = JSON.parse(maps[c.mapNum+next-1].target)
+			
+			localStorage.setItem("obstacles", maps[c.mapNum+next-1].obst);
+			localStorage.setItem("target", maps[c.mapNum+next-1].target);
+			}
+			else{
+				obstacles = []
+				target = {x:canvasSize[0] / 2, y:50,size: 16}
+			}
+	}
 }

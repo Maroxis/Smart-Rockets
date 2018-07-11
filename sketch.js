@@ -7,6 +7,7 @@ var canvasDiag = 0;
 var obstacles = [];
 var segments = [];
 var workers =[];
+var maps = [];
 
 
 //Timer
@@ -117,7 +118,7 @@ function draw() {
   if (state !== 0)
     makeSimulation()
   infoCanv.update()
-
+	
   //rockets
   for(var i = 0; i < populations.length; i++){
     for (var j = 0; j < populations[i].popsize; j++) {
@@ -142,6 +143,7 @@ function draw() {
   //stroke(244,131,66)
   
   //target
-  stroke(0)
-  ellipse(target.x, target.y, 16, 16);
+	
+	stroke(0)
+  ellipse(target.x, target.y, target.size, target.size);
 }

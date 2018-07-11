@@ -91,3 +91,6 @@ function saveObstacles(){
 	var obst = JSON.stringify(obstacles)
 	localStorage.setItem("obstacles", obst);
 }
+function undoObstacle(){
+	obstacles.pop()
+}
