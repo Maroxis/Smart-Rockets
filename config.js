@@ -1,10 +1,10 @@
 var lifespan = 400; //rocket lifetime
-var maxforce = 0.3; //rocket max speed
+var maxforce = 1 //rocket max acceleration keep between 0.1-2
 var mutationRate = 0.01 //DNA
-const popSize = 40 // number of rockets
+const popSize = 30 // number of rockets
 const popNum = 3 // nubmer of populations
 
-const brainNodeNum = 12 // number of nodes in brain layer
+const brainNodeNum = 8 // number of nodes in brain layer
 
 var debug = false;
 

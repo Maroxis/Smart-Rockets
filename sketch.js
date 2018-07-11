@@ -1,8 +1,3 @@
-// Daniel Shiffman
-// http://codingrainbow.com
-// http://patreon.com/codingrainbow
-// Code for: https://youtu.be/bGz7mv2vD6g
-
 var state = 0;
 var populations = [];
 var maxFitness;
@@ -35,6 +30,9 @@ function setup() {
 		obstacles = obst
 		remakeSegments()
 		}
+		if(localStorage.getItem("target") !== null){
+			target = JSON.parse(localStorage.getItem("target"))
+		}
 	}
   createCanvas(canvasSize[0], canvasSize[1]);
   uiCanv = new p5(uiCanvas);
@@ -42,18 +40,12 @@ function setup() {
     statCanv = new p5(statCanvas);
   infoCanv = new p5(infoCanvas);
   ///rockets
-  //rocket = new Rocket();
-  //var col = color(0,255,255,128)
   for(var i = 0; i < popNum; i++){
     if(popColors[i])
       populations.push(new Population(popSize,popColors[i]))
     else
       populations.push(new Population(popSize))
-  }
-  //fitness // max possible fitness
-  //maxFitness = width/10 * targetBonus * timeBonus;
-  //maxFitness = floor(pow(maxFitness, 2))
-  
+  }  
   if (typeof(Worker) !== "undefined") {
      console.log(" Threads ok")
      createWorkers()
@@ -140,11 +132,13 @@ function draw() {
   fill(255, 0, 0);
   
   //debug outilens
-  /*stroke(242, 41, 222);
-  for (var i = 0; i < segments.length; i ++){
-	  line(segments[i].a.x,segments[i].a.y,segments[i].b.x,segments[i].b.y)
+  if(debug){
+	stroke(242, 41, 222);
+	for (var i = 0; i < segments.length; i ++){
+		line(segments[i].a.x,segments[i].a.y,segments[i].b.x,segments[i].b.y)
+	}
   }
-  */
+  
   //stroke(244,131,66)
   
   //target
