@@ -6,7 +6,6 @@ var uiCanvas = function( c ) {
     c.bgCol = color(164,182,164)
     c.cells = 5
     c.genNum = "0005"
-    c.mapNum = 1
     c.typing = false
     c.noType;
     c.mouseX = mouseX
@@ -49,7 +48,7 @@ var uiCanvas = function( c ) {
 			//c.image(img,4,(c.cellSize - img.height)/2+c.cellSize*2)
 			ctx.restore()
     });
-    c.mapNumber(c.mapNum);
+    c.mapNumber(mapNum);
     loadImage("assets/skipGenBt.png", function(img) {
 			c.image(img,4,(c.cellSize - img.height-16)/2+c.cellSize*3)
     });
@@ -99,11 +98,11 @@ var uiCanvas = function( c ) {
     c.fill(0);
 		
 		c.txt = ""
-		if(c.mapNum < 10)
+		if(mapNum < 10)
 			c.txt += "00"
-		else if(c.mapNum < 100)
+		else if(mapNum < 100)
 			c.txt += "0"
-		c.txt += c.mapNum
+		c.txt += mapNum
 		
     c.text(c.txt, 8, (c.cellSize + 50)/2+c.cellSize*1.75);
     c.pop()
@@ -122,19 +121,17 @@ var uiCanvas = function( c ) {
               break;
             case 1:
 							if(c.mouseY < c.cellSize*(i+0.5)){
-								obstacles.push( new Obstacle(25,25,20,20) )
-								saveObstacles()
+								obstacles.push( new Obstacle(25,25,20,20) )				
 							}else{
-								//obstacles = []
 								undoObstacle()
-								saveObstacles()
 							}
+							saveMap()
               break;
 						case 2:
 							if(c.mouseY < c.cellSize*(i+0.4)){
-								c.nextMap()
+								nextMap()
 							}else if(c.mouseY > c.cellSize*(i+0.6)){
-								c.prevMap()
+								prevMap()
 							}
 							c.mapNumber()
 						break;
@@ -190,47 +187,4 @@ var uiCanvas = function( c ) {
     clearInterval(infoCanv.time)
   }
 	
-	c.prevMap = function(){
-		
-		if(c.mapNum == 1){
-			c.saveMap(998)
-			c.mapNum = 999
-		}
-		else{
-			c.saveMap(-1)
-			c.mapNum--
-		}
-	}
-	c.nextMap = function(){
-		if(c.mapNum == 999){
-			c.saveMap(-998)
-			c.mapNum = 1
-		}
-		else{
-			c.saveMap(1)
-			c.mapNum++
-		}
-	}
-	c.saveMap = function(next){
-		console.log(c.mapNum-1,c.mapNum-1+next)
-		maps[c.mapNum-1] = {
-			obst:JSON.stringify(obstacles),
-			target:JSON.stringify(target)
-			}
-		if(maps[c.mapNum+next-1] != undefined){
-			var obst = JSON.parse(maps[c.mapNum+next-1].obst)
-			for ( var i = 0; i < obst.length; i++)
-				reattachMethods(obst[i],Obstacle)
-			obstacles = obst
-			
-			target = JSON.parse(maps[c.mapNum+next-1].target)
-			
-			localStorage.setItem("obstacles", maps[c.mapNum+next-1].obst);
-			localStorage.setItem("target", maps[c.mapNum+next-1].target);
-			}
-			else{
-				obstacles = []
-				target = {x:canvasSize[0] / 2, y:50,size: 16}
-			}
-	}
 }

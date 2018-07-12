@@ -4,6 +4,7 @@ var maxFitness;
 var statCanv
 var canvasDiag = 0;
 
+var target = {x:targetDefault.x,y:targetDefault.y,size:targetDefault.size}
 var obstacles = [];
 var segments = [];
 var workers =[];
@@ -24,6 +25,15 @@ function setup() {
   sec = 0;
   gen = 1;
 	if(localStorage){
+		if(localStorage.getItem("maps") !== null){
+			maps = JSON.parse(localStorage.getItem("maps"))
+			var obst = JSON.parse(maps[0].obst)
+			for ( var i = 0; i < obst.length; i++)
+				reattachMethods(obst[i],Obstacle)
+			obstacles = obst
+			remakeSegments()
+			target = JSON.parse(maps[0].target)
+		}/*
 		if(localStorage.getItem("obstacles") !== null){ 
 		var obst = JSON.parse(localStorage.getItem("obstacles"))
 		for ( var i = 0; i < obst.length; i++)
@@ -33,7 +43,7 @@ function setup() {
 		}
 		if(localStorage.getItem("target") !== null){
 			target = JSON.parse(localStorage.getItem("target"))
-		}
+		}*/
 	}
   createCanvas(canvasSize[0], canvasSize[1]);
   uiCanv = new p5(uiCanvas);
@@ -68,7 +78,8 @@ function quickSim(ammount) {
   var tar = JSON.stringify(target)
   var seg = JSON.stringify(segments)
   var canvD = JSON.stringify(canvasDiag)
-  var message = {p: population, amm: ammount, c: count, id: i, obst: obst, tar: tar, gen: gen, seg: seg,canvD: canvD}
+	var ma = JSON.stringify(maps)
+  var message = {p: population, amm: ammount, c: count, id: i, obst: obst, tar: tar, gen: gen, seg: seg,canvD: canvD,maps:ma}
   workers[i].postMessage(message)
   }
 }
@@ -106,7 +117,10 @@ function makeSimulation() {
      
     if (drawStats)
       statCanv.drawScore()
-     
+    if(training){
+			nextMadeMap()
+			uiCanv.mapNumber()
+		}
     return true; //whole generation completed
   }
 

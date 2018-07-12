@@ -1,4 +1,4 @@
-self.importScripts('protoRebuild.js','config.js','population.js','dna.js','history.js','obstacle.js','smartRocket.js','brain.js')
+self.importScripts('protoRebuild.js','config.js','population.js','dna.js','history.js','obstacle.js','smartRocket.js','brain.js','maps.js')
 function init(oEvent){
   gen = oEvent.data.gen
   count = oEvent.data.c
@@ -14,6 +14,9 @@ function init(oEvent){
    segments = JSON.parse(oEvent.data.seg)
    target = JSON.parse(oEvent.data.tar)
    canvasDiag = oEvent.data.canvD
+	 
+	 maps = []
+	 maps = JSON.parse(oEvent.data.maps)
 }
 onmessage = function (oEvent) {
   init(oEvent)
@@ -33,7 +36,7 @@ onmessage = function (oEvent) {
   var dec = (time+"").split(".")
   time = (Math.floor(time/1000)+"."+(time+"").split("."))
   JSON.stringify(population)
-  var msg ={p: population, id: oEvent.data.id, amm: oEvent.data.amm, time: time}
+  var msg ={p: population, id: oEvent.data.id, amm: oEvent.data.amm, time: time, mapNum: mapNum}
   postMessage(msg);//oEvent.data //+ time  + oEvent
 };
 
@@ -57,7 +60,8 @@ function makeSim(population) {
 
     gen++;
     count = 0;
-  
+		if(training)
+			nextMadeMap()
     return true; //whole generation completed
   }
 }

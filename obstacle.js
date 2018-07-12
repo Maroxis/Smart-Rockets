@@ -87,10 +87,7 @@ function collide(r1,r2){
   }
   return(collision);
 }
-function saveObstacles(){
-	var obst = JSON.stringify(obstacles)
-	localStorage.setItem("obstacles", obst);
-}
+
 function undoObstacle(){
 	obstacles.pop()
 }

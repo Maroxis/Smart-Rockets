@@ -64,11 +64,11 @@ function mouseReleased() {
   mX = 0
   mY = 0
   if(selectedObst || draggedObst){
-	saveObstacles()
-	remakeSegments()
+		saveMap()
+		remakeSegments()
   }
   if(selectedTarget){
-	saveTarget()
+		saveMap()
   }
   selectedObst = null;
   draggedObst = null;
