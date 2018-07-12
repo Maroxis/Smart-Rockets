@@ -10,7 +10,7 @@ document.addEventListener('contextmenu', event => event.preventDefault());
 function mousePressed() {
   mX = mouseX
   mY = mouseY
-  if (mouseButton == LEFT && mX > target.x - 8 && mX < target.x + 8 && mY < target.y +8  && mY > target.y -8 )
+  if (mouseButton == LEFT && mX > target.x - target.size/2 && mX < target.x + target.size/2 && mY < target.y +target.size/2  && mY > target.y -target.size/2 )
     {
     selectedTarget = true;
     mX = mX - target.x
@@ -63,8 +63,13 @@ function mouseDragged() {
 function mouseReleased() {
   mX = 0
   mY = 0
-  if(selectedObst || draggedObst)
-	saveObstacles()
+  if(selectedObst || draggedObst){
+		saveMap()
+		remakeSegments()
+  }
+  if(selectedTarget){
+		saveMap()
+  }
   selectedObst = null;
   draggedObst = null;
   selectedTarget = false;

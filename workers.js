@@ -9,6 +9,9 @@ function createWorkers(){
         workersDone++
         if(workersDone == popNum){
           count = 0;
+					mapNum = oEvent.data.mapNum
+					loadMap(mapNum-1)
+					uiCanv.mapNumber()
           gen += oEvent.data.amm
           console.log(oEvent.data.amm+" gen. done in " +oEvent.data.time+ " sec" )
           loop()

@@ -2,52 +2,86 @@
 // http://codingrainbow.com
 // http://patreon.com/codingrainbow
 // Code for: https://youtu.be/bGz7mv2vD6g
-//var maxForceDiff = 0.5
 
 DNA = function(genes) {
   if (genes) {
-    this.genes = genes;
+    this.inWeights = genes.inWeights;
+    this.outWeights = genes.outWeights;
   } else {
-    this.genes = [];
-    for (var i = 0; i < lifespan; i++) {
-      v1 = random(-1,1)
-      v2 = random(-1,1)
-      this.genes[i] = {x: v1, y: v2};
-      
-      // if (i !== 0) {
-      //   while (p5.Vector.angleBetween(this.genes[i], this.genes[i - 1]) > PI/2) {
-      //     this.genes[i] = p5.Vector.random2D();
-      //   }
-      //}
-    
-      this.genes[i].x *= maxforce
-      this.genes[i].y *= maxforce
-      }
+		this.inWeights = []
+		this.outWeights = []
+	  
+		for(var i = 0; i < inputNumber; i++){  //input number
+			this.inWeights.push([])
+			for(var j = 0; j < brainNodeNum; j++){ //layer number
+				this.inWeights[i].push(Math.random()*2-1)
+		}
+	  }
+		for(var i = 0; i < brainNodeNum; i++){ //layer number
+			this.outWeights.push([])
+		for(var j = 0; j < 2; j++){//output number
+			this.outWeights[i].push(Math.random()*2-1)
+		}
+	  }
     }
 }
   
 
   DNA.prototype.crossover = function(partner) {
-    var newgenes = [];
-    var mid = Math.floor(Math.random()*this.genes.length);
-    for (var i = 0; i < this.genes.length; i++) {
-      if (i > mid) {
-        newgenes[i] = this.genes[i];
-      } else {
-        newgenes[i] = partner.genes[i];
-      }
+    var newgenes = {};
+    newgenes.inWeights = [];
+	newgenes.outWeights = [];
+	for(var x = 0; x < inputNumber; x++){  //input number
+		newgenes.inWeights.push([])
+		for(var j = 0; j < brainNodeNum; j++){ //layer number
+			newgenes.inWeights[x].push(0)
+		}
+	}
+	for(var y = 0; y < brainNodeNum; y++){ //layer number
+		newgenes.outWeights.push([])
+		for(var j = 0; j < 2; j++){//output number
+			newgenes.outWeights[y].push(0)
+		}
+	}
+    
+    var mid = Math.floor(Math.random()*this.inWeights.length);
+    for (var i = 0; i < this.inWeights.length; i++) {
+		for (var j = 0; j < this.inWeights[i].length; j++){
+			if (j > mid) {
+				newgenes.inWeights[i][j] = this.inWeights[i][j];
+			} else {
+				newgenes.inWeights[i][j] = partner.inWeights[i][j];
+			}	
+		}
     }
-    return new DNA(newgenes);
+	for (var i = 0; i < this.outWeights.length; i++) {
+		for (var j = 0; j < this.outWeights[i].length; j++){
+			if (j > mid) {
+				newgenes.outWeights[i][j] = this.outWeights[i][j];
+			} else {
+				newgenes.outWeights[i][j] = partner.outWeights[i][j];
+			}	
+		}
+    }
+	return new DNA(newgenes)
+ 
   }
 
   DNA.prototype.mutation = function() {
-    for (var i = 0; i < this.genes.length; i++) {
-      if (Math.random() < mutationRate) {
-        v1 = Math.random()*2 -1
-        v2 = Math.random()*2 -1
-        this.genes[i] = {x: v1, y: v2};
-        this.genes[i].x *= maxforce
-        this.genes[i].y *= maxforce
-      }
+	  
+    for (var i = 0; i < this.inWeights.length; i++) {
+		for (var j = 0; j < this.inWeights[i].length; j++){
+			if (Math.random() < mutationRate) {
+				this.inWeights[i][j] = Math.random()*2 -1
+			}
+		}
     }
+	for (var i = 0; i < this.outWeights.length; i++) {
+		for (var j = 0; j < this.outWeights[i].length; j++){
+			if (Math.random() < mutationRate) {
+				this.outWeights[i][j] = Math.random()*2 -1
+			}
+		}
+    }
+	
   }

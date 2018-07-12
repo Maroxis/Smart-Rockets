@@ -1,16 +1,21 @@
 var lifespan = 400; //rocket lifetime
-var maxforce = 0.3; //rocket max speed
+var maxforce = 1 //rocket max acceleration keep between 0.1-2
 var mutationRate = 0.01 //DNA
-var popSize = 20 // number of rockets
-var popNum = 3 // nubmer of populations
-var popColors = [] // custom pop colors RGB // if not specified color will random
+const popSize = 30 // number of rockets
+const popNum = 3 // nubmer of populations
+
+const brainNodeNum = 8 // number of nodes in brain layer
+
+var debug = false; //shows sensors, colliders etc.
+var training = false; //cycle between maps after each generation
 
 const canvasSize = [400,400] // 
 const statCanvasSize = [260,400] // 
 
-var target = {x:canvasSize[0] / 2, y:50}
+const targetDefault = {x:canvasSize[0] / 2, y:50,size: 16}
 
-popColors.push('rgb(192,32,32)')
+const popColors = [] // custom pop colors RGB // if not specified color will random
+popColors.push('rgb(192,32,32)') //predefined good looking colors, can be removed
 popColors.push('rgb(32,192,32)')
 popColors.push('rgb(32,192,192)')
 popColors.push('rgb(192,192,32)')
@@ -19,9 +24,10 @@ popColors.push('rgb(128,32,192)')
 
 
 // multiply fitness score
-var targetBonus = 5;
-var timeBonus = 5;
+var targetBonus = 10;
+var timeBonus = 3;
 var crashPenalty = 5;
+var distanceBonus = 5
 
 // history stats
 var drawStats = true;
