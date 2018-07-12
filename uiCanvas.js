@@ -132,7 +132,8 @@ var uiCanvas = function( c ) {
 								nextMap()
 							}else if(c.mouseY > c.cellSize*(i+0.6)){
 								prevMap()
-							}
+							}else
+								changeMap()
 							c.mapNumber()
 						break;
             case 3:

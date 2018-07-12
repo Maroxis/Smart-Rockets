@@ -42,6 +42,16 @@ function nextMap(){
 	}
 }
 
+function changeMap(){
+	var index = prompt("enter map number")
+	if(index < 1000 && index > 0){
+		loadMap(index-1)
+		mapNum = index
+	}
+	else
+		alert("incorrect number\nSelect number betweeb 1-999")
+}
+
 function nextMadeMap(){
 	for(var i = mapNum+1; maps[i-1] == null || maps[i-1].obs == [] ; i++){
 		if(i > 999)
@@ -54,7 +64,6 @@ function nextMadeMap(){
 function loadMap(index){
 	//saveMap()
 	if(maps[index] != undefined){
-		
 		var obst = JSON.parse(maps[index].obst)
 		for ( var i = 0; i < obst.length; i++)
 			reattachMethods(obst[i],Obstacle)

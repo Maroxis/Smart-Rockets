@@ -7,7 +7,7 @@ const popNum = 3 // nubmer of populations
 const brainNodeNum = 8 // number of nodes in brain layer
 
 var debug = false; //shows sensors, colliders etc.
-var training = true; //cycle between maps after each generation
+var training = false; //cycle between maps after each generation
 
 const canvasSize = [400,400] // 
 const statCanvasSize = [260,400] // 
