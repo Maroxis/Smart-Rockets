@@ -31,20 +31,10 @@ function setup() {
 			for ( var i = 0; i < obst.length; i++)
 				reattachMethods(obst[i],Obstacle)
 			obstacles = obst
-			remakeSegments()
 			target = JSON.parse(maps[0].target)
-		}/*
-		if(localStorage.getItem("obstacles") !== null){ 
-		var obst = JSON.parse(localStorage.getItem("obstacles"))
-		for ( var i = 0; i < obst.length; i++)
-			reattachMethods(obst[i],Obstacle)
-		obstacles = obst
-		remakeSegments()
 		}
-		if(localStorage.getItem("target") !== null){
-			target = JSON.parse(localStorage.getItem("target"))
-		}*/
 	}
+	remakeSegments()
   createCanvas(canvasSize[0], canvasSize[1]);
   uiCanv = new p5(uiCanvas);
   if (drawStats)
