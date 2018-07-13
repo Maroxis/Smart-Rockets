@@ -1,6 +1,4 @@
 function saveSession(){
-	state = 0 // pause
-		
 	session = {}
 	
 	session.maps = maps
@@ -10,13 +8,17 @@ function saveSession(){
 	session.sec = infoCanv.sec
 	session.populations = populations
 	
-	localStorage.setItem("session", JSON.stringify(session))
+	if(localStorage)
+		localStorage.setItem("session", JSON.stringify(session))
+	else
+		return false
 	
-	state = 1 // reusme
+	return true
 }
 
 function loadSession(){
 	if(localStorage.getItem("session") !== null){
+		
 		var session = JSON.parse(localStorage.getItem("session"))
 		maps = session.maps
 		mapNum = session.currMap
@@ -30,6 +32,11 @@ function loadSession(){
 		}
 		
 		loadMap(mapNum-1)
-	}else
+		
+		return true
+		
+	}else{
 		console.log("no session to load")
+		return false;
+	}
 }

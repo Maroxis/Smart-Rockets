@@ -56,19 +56,6 @@ SmartRocket.prototype.gatherInfo = function() {
 		
 		var X = this.pos.x-2 - Math.cos(angle) * 30
 		var Y = this.pos.y-2 - Math.sin(angle) * 30
-
-		//we can reduce checks by 1/4 skipping all segments that are impossible to hit ( based on angle of rocket) 
-		var skip = 0;
-		
-		if(this.angle < 1.5707){
-			skip = 3;
-		}else if(this.angle < 3.1415){
-			skip = 0;
-		}else if(this.angle < 4.7123){
-			skip = 1;
-		}else{
-			skip = 2;
-		}
 		
 		var ray = {a:{x:this.pos.x-2,y:this.pos.y},b:{x:X,y:Y}}
 		var closestIntersect = null
@@ -76,8 +63,6 @@ SmartRocket.prototype.gatherInfo = function() {
 			closestIntersect = getIntersection(ray,segments[x]);
 		}
 		for(var j=x;j<segments.length;j++){
-			if(j%4 == skip)
-				continue
 			var intersect = getIntersection(ray,segments[j]);
 			if(!intersect) continue;
 			if(intersect.param<closestIntersect.param){
@@ -122,6 +107,7 @@ SmartRocket.prototype.gatherInfo = function() {
       return true
     
 	this.angle = Math.atan2(this.vel.y, this.vel.x)+Math.PI
+	
 	this.gatherInfo() // gather sensors data
 
 	var move = this.brain.calculate(this.sensors)
@@ -150,7 +136,6 @@ SmartRocket.prototype.gatherInfo = function() {
       }
 
     if (this.pos.x > canvasSize[0]-2 || this.pos.x < 2 || this.pos.y > canvasSize[1]-2 || this.pos.y < 2)
-
       return this.crashed = true;
   
 	var d = Math.hypot((this.pos.x-target.x),(this.pos.y-target.y))
@@ -166,29 +151,29 @@ SmartRocket.prototype.gatherInfo = function() {
     noStroke();
     fill((this.col.slice(0, 3) + "a" + this.col.slice(3, -1)+",0.8)"));
     translate(this.pos.x, this.pos.y);
-
     rotate(this.angle+Math.PI/2);
     rectMode(CENTER);
     rect(0, 0, 4, 20);
-	  pop();
+	pop();
 	
-    if(this.debug){//show sensors
-		  for (var i = -2; i < 3; i++){
-        var angle = this.angle+Math.PI*(i/12)//30*
-
-        var X = this.pos.x-2 - Math.cos(angle) * 100
-        var Y = this.pos.y-2 - Math.sin(angle) * 100
-        //line(this.pos.x-2,this.pos.y,X,Y)
-
-        var ray = {a:{x:this.pos.x-2,y:this.pos.y},b:{x:X,y:Y}}
-        var closestIntersect = null;
-        for(var j=0;j<segments.length;j++){
-          var intersect = getIntersection(ray,segments[j]);
-          if(!intersect) continue;
-          if(!closestIntersect || intersect.param<closestIntersect.param){
-            closestIntersect=intersect;
-          }
-       }
+	if(this.debug){//show sensors
+	
+		for (var i = -2; i < 3; i++){
+			var angle = this.angle+Math.PI*(i/12)//30*
+			
+			var X = this.pos.x-2 - Math.cos(angle) * 100
+			var Y = this.pos.y-2 - Math.sin(angle) * 100
+			//line(this.pos.x-2,this.pos.y,X,Y)
+			
+			var ray = {a:{x:this.pos.x-2,y:this.pos.y},b:{x:X,y:Y}}
+			var closestIntersect = null;
+			for(var j=0;j<segments.length;j++){
+				var intersect = getIntersection(ray,segments[j]);
+				if(!intersect) continue;
+				if(!closestIntersect || intersect.param<closestIntersect.param){
+					closestIntersect=intersect;
+				}
+			}
 			if(closestIntersect!= null){
 				if(this.sensors[(i+3)*2+1] == 1)
 					stroke(255)
@@ -199,7 +184,7 @@ SmartRocket.prototype.gatherInfo = function() {
 			}
 		}
 	}
-
+    
   }
   
   function getIntersection(ray,segment){
