@@ -40,6 +40,8 @@ function setup() {
   if (drawStats)
     statCanv = new p5(statCanvas);
   infoCanv = new p5(infoCanvas);
+	centerCanvases()
+	//centerCanvas(infoCanv.canvas)
   ///rockets
   for(var i = 0; i < popNum; i++){
     if(popColors[i])
@@ -51,6 +53,17 @@ function setup() {
      console.log(" Threads ok")
      createWorkers()
   }
+}
+
+function centerCanvases(){
+	uiCanv.canvas.style.top = '10px'
+	uiCanv.canvas.style.left = canvasSize[0]+10+'px'
+	if (drawStats){
+    statCanv.canvas.style.top = '10px' 
+		statCanv.canvas.style.left = canvasSize[0]+50+'px'
+	}
+	infoCanv.canvas.style.top = canvasSize[1]+10+'px'
+	infoCanv.canvas.style.left = '10px'
 }
 
 function quickSim(ammount) {
