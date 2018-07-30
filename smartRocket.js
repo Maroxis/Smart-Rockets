@@ -1,5 +1,5 @@
 SmartRocket = function(dna,col) {
-  this.pos = {x:canvasSize[0] / 2,y:canvasSize[1] - 2};
+  this.pos = {x:mainCanv.width / 2,y:mainCanv.height- 10};
   this.vel = {x:0,y:0}
   this.acc = {x:0,y:0}
   this.lifespan = 0;
@@ -27,13 +27,13 @@ SmartRocket = function(dna,col) {
 
   SmartRocket.prototype.calcFitness = function() {
     if (this.completed) {
-      this.fitness = canvasSize[0]*1
+      this.fitness = mainCanv.width+1
       this.fitness *= targetBonus;
       this.fitness *= ((this.lifespan)/(lifespan))*(1-timeBonus)+timeBonus
     }
     else{
       var d = Math.sqrt( (this.pos.x-target.x)*(this.pos.x-target.x) + (this.pos.y-target.y)*(this.pos.y-target.y) )
-      this.fitness = Math.floor((d/canvasSize[0])*(1-canvasSize[0])+canvasSize[0]);
+      this.fitness = Math.floor((d/mainCanv.width)*(1-mainCanv.width)+mainCanv.width);
 	  this.fitness *= distanceBonus
 	  if (this.fitness < 0)
 		  this.fitness = 0;
@@ -135,8 +135,17 @@ SmartRocket.prototype.gatherInfo = function() {
         return this.crashed = true;
       }
 
-    if (this.pos.x > canvasSize[0]-2 || this.pos.x < 2 || this.pos.y > canvasSize[1]-2 || this.pos.y < 2)
-      return this.crashed = true;
+    if (this.pos.x > mainCanv.width-2 || this.pos.x < 2 || this.pos.y > mainCanv.height-2 || this.pos.y < 2){
+      if(this.pos.x < 0)
+				this.pos.x = 0
+			if(this.pos.x > mainCanv.width)
+				this.pos.x = mainCanv.width
+			if(this.pos.y < 0)
+				this.pos.y = 0
+			if(this.pos.y > mainCanv.height)
+				this.pos.y = mainCanv.height
+			return this.crashed = true;
+		}
   
 	var d = Math.hypot((this.pos.x-target.x),(this.pos.y-target.y))
     if (d < target.size) {

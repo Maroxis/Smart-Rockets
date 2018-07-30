@@ -17,6 +17,8 @@ function init(oEvent){
 	 
 	 maps = []
 	 maps = JSON.parse(oEvent.data.maps)
+	 
+	 mainCanv = JSON.parse(oEvent.data.mainCanv)
 }
 onmessage = function (oEvent) {
   init(oEvent)

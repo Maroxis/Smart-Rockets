@@ -1,7 +1,7 @@
 var uiCanvas = function( c ) {
 
   c.setup = function() {
-    c.createCanvas(40, canvasSize[1]);
+    c.createCanvas(40, mainCanv.height);
     c.noLoop();
     c.bgCol = color(164,182,164)
     c.cells = 5
@@ -9,7 +9,7 @@ var uiCanvas = function( c ) {
     c.typing = false
     c.noType;
     c.mouseX = mouseX
-    c.cellSize = canvasSize[1]/c.cells
+    c.cellSize = c.height/c.cells
   };
 
   c.draw = function() {
@@ -23,8 +23,11 @@ var uiCanvas = function( c ) {
     
     c.line(1,0,1,c.height)
     c.line(c.width-1,0,c.width-1,c.height)
-    for(var i = 0; i < floor(canvasSize[1]/c.cellSize); i++)
+		
+		c.line(0,1,c.width,0)
+    for(var i = 1; i < c.cells; i++)
       c.line(0,i*c.cellSize+1,c.width,i*c.cellSize+1)
+	
     c.line(0,c.height-1,c.width,c.height-1)
     c.pop()
     
@@ -42,9 +45,9 @@ var uiCanvas = function( c ) {
 			ctx.save()
 			ctx.translate(c.canvas.width/2,c.canvas.height/2)
 			ctx.rotate(Math.PI/2)
-			c.image(img,8,-16)
+			c.image(img,12,-16)
 			ctx.rotate(Math.PI)
-			c.image(img,8,-16)
+			c.image(img,12,-16)
 			//c.image(img,4,(c.cellSize - img.height)/2+c.cellSize*2)
 			ctx.restore()
     });
@@ -93,7 +96,7 @@ var uiCanvas = function( c ) {
 	c.mapNumber = function(){
 		c.push()
 		c.fill(c.bgCol)
-    c.rect(2,c.cellSize*2.4 +2,c.width-4,12);
+    c.rect(2,c.cellSize*2.5 -6,c.width-4,12);
     c.textSize(15)
     c.fill(0);
 		
@@ -104,7 +107,7 @@ var uiCanvas = function( c ) {
 			c.txt += "0"
 		c.txt += mapNum
 		
-    c.text(c.txt, 8, (c.cellSize + 50)/2+c.cellSize*1.75);
+    c.text(c.txt, 8, +c.cellSize*2.5+6);
     c.pop()
 	}
   c.mousePressed = function() {

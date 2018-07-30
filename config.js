@@ -9,10 +9,8 @@ const brainNodeNum = 8 // number of nodes in brain layer
 var debug = false; //shows sensors, colliders etc.
 var training = false; //cycle between maps after each generation
 
-const canvasSize = [400,400] // 
-const statCanvasSize = [260,400] // 
-
-const targetDefault = {x:canvasSize[0] / 2, y:50,size: 16}
+//var canvasSize = [400,400] // 
+//var statCanvasSize = [260,400] // 
 
 const popColors = [] // custom pop colors RGB // if not specified color will random
 popColors.push('rgb(192,32,32)') //predefined good looking colors, can be removed

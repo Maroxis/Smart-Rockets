@@ -2,13 +2,15 @@ var state = 0;
 var populations = [];
 var maxFitness;
 var statCanv
+var mainCanv
 var canvasDiag = 0;
-
+const targetDefault = {x:window.innerWidth/3, y:50,size: 16}
 var target = {x:targetDefault.x,y:targetDefault.y,size:targetDefault.size}
 var obstacles = [];
 var segments = [];
 var workers =[];
 var maps = [];
+
 
 
 //Timer
@@ -20,7 +22,6 @@ function preload(){
 }
 function setup() {
   frameRate(60)
-  canvasDiag = Math.ceil(Math.hypot(canvasSize[0],canvasSize[1]))
   count = 0;
   sec = 0;
   gen = 1;
@@ -34,14 +35,16 @@ function setup() {
 			target = JSON.parse(maps[0].target)
 		}
 	}
-	remakeSegments()
-  createCanvas(canvasSize[0], canvasSize[1]);
+  mainCanv = createCanvas(400, 400);
+	console.log(mainCanv)
   uiCanv = new p5(uiCanvas);
   if (drawStats)
     statCanv = new p5(statCanvas);
   infoCanv = new p5(infoCanvas);
+	resizeCanvases()
 	centerCanvases()
-	//centerCanvas(infoCanv.canvas)
+	canvasDiag = Math.ceil(Math.hypot(mainCanv.width,mainCanv.height))
+	remakeSegments()
   ///rockets
   for(var i = 0; i < popNum; i++){
     if(popColors[i])
@@ -53,17 +56,6 @@ function setup() {
      console.log(" Threads ok")
      createWorkers()
   }
-}
-
-function centerCanvases(){
-	uiCanv.canvas.style.top = '10px'
-	uiCanv.canvas.style.left = canvasSize[0]+10+'px'
-	if (drawStats){
-    statCanv.canvas.style.top = '10px' 
-		statCanv.canvas.style.left = canvasSize[0]+50+'px'
-	}
-	infoCanv.canvas.style.top = canvasSize[1]+10+'px'
-	infoCanv.canvas.style.left = '10px'
 }
 
 function quickSim(ammount) {
@@ -82,7 +74,8 @@ function quickSim(ammount) {
   var seg = JSON.stringify(segments)
   var canvD = JSON.stringify(canvasDiag)
 	var ma = JSON.stringify(maps)
-  var message = {p: population, amm: ammount, c: count, id: i, obst: obst, tar: tar, gen: gen, seg: seg,canvD: canvD,maps:ma}
+	var canv = JSON.stringify({width:mainCanv.width,height:mainCanv.height})
+  var message = {mainCanv: canv ,p: population, amm: ammount, c: count, id: i, obst: obst, tar: tar, gen: gen, seg: seg,canvD: canvD,maps:ma}
   workers[i].postMessage(message)
   }
 }

@@ -2,7 +2,7 @@ var infoCanvas = function( c ) {
 
   c.setup = function() {
     if(drawStats){
-      c.createCanvas(canvasSize[0] + 40 + statCanvasSize[0] , 40);
+      c.createCanvas(windowWidth - 4 , 40);
       c.textSize(28)
     }
 	  else{
